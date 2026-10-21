@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz · Horta Vertical · Ciências 7º</title>
+<style>
+  :root{--fundo:#150f18;--fundo2:#1f1724;--borda:#33263a;--borda2:#4a3756;--verde:#7be36b;--magenta:#e05cff;--laranja:#ff8f3a;--limao:#f4e04d;--vermelho:#ff5d6c;--texto:#f2ecf4;--cinza:#a596ab}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Trebuchet MS',Verdana,'Segoe UI',sans-serif;background:radial-gradient(900px 420px at 50% -8%,#2d1f36,#150f18 62%),var(--fundo);color:var(--texto);line-height:1.6;padding-bottom:60px;font-size:17px}
+  header{background:linear-gradient(120deg,#2a1235,#3a1842 55%,#1f1724);padding:26px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--magenta)}
+  header .selo{font-size:.76rem;letter-spacing:2px;color:#f0c2fa;text-transform:uppercase}
+  header h1{font-size:1.5rem;margin:6px 0 2px}
+  header p{color:#e2d9e6;font-size:.92rem}
+  .wrap{max-width:820px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--fundo2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:var(--magenta);color:#2a0633;font-weight:bold}
+  .barra-nav a.lock{opacity:.5}
+  .intro{background:var(--fundo2);border:1px solid var(--borda);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:var(--magenta);font-size:1.1rem;margin-bottom:8px}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--fundo2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--fundo);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .codigo{background:linear-gradient(120deg,#16301a,#1d4a1f);border:2px solid var(--verde);border-radius:14px;padding:16px;text-align:center;margin-bottom:16px;display:none;position:sticky;top:6px;z-index:5}
+  .codigo.show{display:block}
+  .codigo .cod{font-size:1.8rem;font-weight:bold;letter-spacing:3px;color:#b6f0aa;margin:6px 0}
+  .progresso{height:10px;background:var(--borda);border-radius:6px;overflow:hidden;margin-bottom:16px}
+  .progresso div{height:100%;background:linear-gradient(90deg,var(--laranja),var(--verde),var(--magenta));width:0;transition:width .3s}
+  .q{background:var(--fundo2);border:1px solid var(--borda);border-radius:16px;padding:16px;margin-bottom:14px}
+  .q .num{color:var(--magenta);font-weight:bold;font-size:.8rem;letter-spacing:1px;text-transform:uppercase}
+  .q .tema{float:right;font-size:.7rem;color:var(--cinza);background:var(--fundo);border:1px solid var(--borda2);border-radius:10px;padding:2px 8px}
+  .q h3{font-size:1rem;margin:6px 0 10px;font-weight:600}
+  .alt{display:block;background:#1a131e;border:1px solid var(--borda2);border-radius:10px;padding:10px 12px;margin:6px 0;cursor:pointer}
+  .alt:hover{border-color:var(--magenta)}
+  .alt input{margin-right:8px}
+  .alt.sel{border-color:var(--magenta);background:#2e1736}
+  .alt.certa{border-color:var(--verde);background:#15301a}
+  .alt.errada{border-color:#555;background:#1d1a1f;color:#aaa}
+  .alt.marcada-errada{border-color:var(--vermelho);background:#3a1420}
+  .exp{margin-top:8px;font-size:.88rem;padding:8px 10px;border-radius:8px;background:#1a131e;border-left:3px solid var(--limao);display:none}
+  .exp.show{display:block}
+  .enviar{width:100%;background:var(--magenta);color:#2a0633;border:none;border-radius:12px;padding:14px;font-size:1.05rem;font-weight:bold;margin:10px 0}
+  .enviar:disabled{background:#2a2230;color:#7d6f83;cursor:not-allowed}
+  .gab{background:var(--fundo2);border:1px dashed var(--magenta);border-radius:14px;padding:16px;margin:16px 0;display:none}
+  .gab.show{display:block}
+  .gab input{padding:9px;border-radius:8px;border:1px solid var(--borda2);background:#120d15;color:var(--texto);font-size:1rem;width:180px;text-transform:uppercase}
+  .gab button{background:var(--magenta);color:#2a0633;border:none;border-radius:8px;padding:9px 14px;font-weight:bold;margin-left:6px}
+  .gab .msg{margin-top:8px;font-size:.9rem}
+  .trilha-fim{background:linear-gradient(120deg,#16301a,#1d3a1f);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .trilha-fim h3{color:#b6f0aa;margin-bottom:8px}
+  .trilha-fim a.btn{display:inline-block;margin-top:8px;background:var(--verde);color:#0d2a09;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .trilha-fim a.btn.off{background:#2a2230;color:#7d6f83;pointer-events:none}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(10,6,12,.97);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--fundo2);border:1px solid var(--magenta);border-radius:14px;padding:22px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal .big{font-size:2.2rem}
+  .modal a,.modal button{display:inline-block;background:var(--magenta);color:#2a0633;border:none;border-radius:8px;padding:10px 18px;font-weight:bold;text-decoration:none}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Horta Vertical · Ciências 7º ano · Colégio Legado</div>
+  <h1>🎯 Quiz — Colheita Rápida</h1>
+  <p>15 questões · Capítulo 9 · Código MED para os pais</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a class="on" href="quiz.html">🎯 Quiz</a>
+    <a href="resumo.html" data-etapa="resumo">🗺️ Resumo</a>
+    <a href="simulado.html" data-etapa="simulado">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="codigo" id="codigo"><div>Seu código de liberação</div><div class="cod" id="cod"></div><div id="codtxt"></div></div>
+
+  <div class="intro">
+    <h2>🧺 Colheita Rápida</h2>
+    <p>Você subiu os 11 andares da torre. Agora é hora de colher: responda as <b>15 questões</b> (todas obrigatórias). Depois de <b>Enviar</b>, as respostas travam, sai o seu <b>código MED</b> e o gabarito comentado abre com o código. Ao enviar, o <b>🗺️ Resumo destrava</b>.</p>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div class="progresso"><div id="barra"></div></div>
+  <div id="questoes"></div>
+  <button class="enviar" id="btn-enviar" onclick="enviar()" disabled>📨 Enviar respostas (responda todas)</button>
+
+  <div class="gab" id="gab">
+    <b>🔑 Gabarito comentado:</b> digite o código MED que apareceu no topo.<br>
+    <input id="gab-in" placeholder="MED-XX-YY"><button onclick="abrirGab()">Ver gabarito</button>
+    <div class="msg" id="gab-msg"></div>
+  </div>
+
+  <div class="trilha-fim" id="trilha-fim">
+    <h3>🔒 Próxima etapa: Resumo</h3>
+    <p id="trilha-fim-txt">O Resumo destrava quando você enviar o Quiz.</p>
+    <a class="btn off" id="btn-prox" href="resumo.html">🗺️ Ir para o Resumo</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🌱🥕🍊</div>
+</div>
+
+<div class="modal-bg" id="lock">
+  <div class="modal">
+    <div class="big">🔒</div>
+    <p><b>Esta etapa ainda está trancada.</b></p>
+    <p id="lock-txt">Para abrir o Quiz, conclua a Leitura Guiada.</p>
+    <a href="index.html">Voltar ao início</a>
+  </div>
+</div>
+<div class="modal-bg" id="modal" style="background:rgba(0,0,0,.75)">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='horta_vertical';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function marcarNav(){
+  var links=document.querySelectorAll('#nav a[data-etapa]');
+  for(var i=0;i<links.length;i++){ var id=links[i].getAttribute('data-etapa'); if(!podeAbrir(id)){ links[i].classList.add('lock'); links[i].textContent='🔒 '+links[i].textContent.replace('🔒 ',''); } else { links[i].classList.remove('lock'); links[i].textContent=links[i].textContent.replace('🔒 ',''); } }
+}
+function checarTrava(){
+  if(podeAbrir('quiz')) return true;
+  var L=lerJSON(KIT+'_leitura_v1'); var p=(L&&L.progresso)||{conferidos:0,total:11,chkPendentes:0};
+  var faltam=p.total-p.conferidos;
+  var txt= faltam>0 ? 'Para abrir o Quiz, conclua a Leitura Guiada: faltam '+faltam+' de '+p.total+' andares.' : 'Para abrir o Quiz, responda a autoavaliação Sim/Não da Leitura Guiada ('+p.chkPendentes+' ponto(s) pendente(s)).';
+  document.getElementById('lock-txt').textContent=txt;
+  document.getElementById('lock').classList.add('show');
+  document.querySelector('.wrap').style.filter='blur(8px)';
+  document.querySelector('.wrap').setAttribute('aria-hidden','true');
+  return false;
+}
+
+/* ====== QUESTÕES (conteúdo do livro Bernoulli Ciências L4, Cap. 9) — a correta é guardada pelo id ====== */
+var Q=[
+ {tema:"Funções",p:"Carnes, ovos, leite e derivados e as leguminosas (feijão, soja, ervilha) são chamados de alimentos construtores. Eles são ricos em proteínas, que têm função:",alts:[
+  {id:"a",t:"estrutural, ajudando no desenvolvimento de músculos e ossos.",ok:true,e:"O livro chama de função estrutural a dos alimentos construtores, ricos em proteínas."},
+  {id:"b",t:"energética, como os pães, as batatas e as massas.",e:"A função energética é dos carboidratos (pães, batatas, massas) e dos lipídios."},
+  {id:"c",t:"reguladora, como as vitaminas e os sais minerais.",e:"A função reguladora é das vitaminas e dos sais minerais (frutas, legumes, verduras, cereais)."},
+  {id:"d",t:"hidrofóbica, porque não se dissolvem em água.",e:"Hidrofóbico é uma característica dos lipídios, não uma função das proteínas."}]},
+ {tema:"Papel social",p:"Segundo o livro, a alimentação também ajudou a construir identidades culturais por meio da comensalidade, que é:",alts:[
+  {id:"a",t:"o hábito de partilhar alimentos, característico da nossa espécie.",ok:true,e:"É a definição do livro (lembre dos hominídeos ao redor da fogueira)."},
+  {id:"b",t:"a quantidade mínima de energia para o corpo ficar em repouso.",e:"Isso é o metabolismo basal."},
+  {id:"c",t:"o conjunto de reações químicas que mantém o corpo funcionando.",e:"Isso é o metabolismo."},
+  {id:"d",t:"a classificação dos alimentos pelo grau de processamento.",e:"Essa classificação é in natura, minimamente processado, processado e ultraprocessado."}]},
+ {tema:"Processamento",p:"Pão, sardinha e atum enlatados, carnes defumadas e compotas de frutas recebem sal, açúcar, óleo ou conservantes para ficarem mais gostosos e durarem mais. Eles são alimentos:",alts:[
+  {id:"a",t:"processados.",ok:true,e:"Processados = alimentos com adição de sais, açúcares, óleos ou outros conservantes."},
+  {id:"b",t:"in natura.",e:"In natura são consumidos naturalmente, sem processamento (frutas, verduras)."},
+  {id:"c",t:"minimamente processados.",e:"Minimamente processados só passam por moagem, secagem, pasteurização (castanhas, leite)."},
+  {id:"d",t:"ultraprocessados.",e:"Ultraprocessados são fórmulas de substâncias e aditivos, quase sem alimento in natura (biscoito recheado, refrigerante)."}]},
+ {tema:"Calorias",p:"No dia a dia, a energia dos alimentos costuma ser medida em kcal. 1 kcal corresponde a:",alts:[
+  {id:"a",t:"1 000 calorias, a energia para elevar a temperatura de 1 litro de água em 1 °C.",ok:true,e:"É exatamente o que o livro diz sobre a kcal."},
+  {id:"b",t:"100 calorias, a energia para elevar 100 mL de água em 1 °C.",e:"1 kcal vale 1 000 calorias, não 100."},
+  {id:"c",t:"a energia para elevar 1 mL de água em 1 °C.",e:"Essa é a definição de 1 caloria (sem o 'quilo')."},
+  {id:"d",t:"a energia mínima para o corpo se manter em repouso.",e:"Isso é o metabolismo basal."}]},
+ {tema:"Metabolismo basal",p:"Mesmo dormindo, o corpo gasta energia, por exemplo para manter a temperatura em torno de 36,5 °C. A quantidade mínima de energia de que o corpo precisa para se manter em repouso é chamada de:",alts:[
+  {id:"a",t:"metabolismo basal.",ok:true,e:"Definição do livro, no quadro da p. 13."},
+  {id:"b",t:"glicemia.",e:"Glicemia é a quantidade de glicose no sangue."},
+  {id:"c",t:"índice glicêmico.",e:"Índice glicêmico indica a rapidez com que um alimento altera a glicemia."},
+  {id:"d",t:"hiperglicemia.",e:"Hiperglicemia é o aumento da glicemia."}]},
+ {tema:"Carboidratos",p:"Qual destes açúcares é um dissacarídeo encontrado nos laticínios?",alts:[
+  {id:"a",t:"Lactose.",ok:true,e:"A lactose é um dissacarídeo (2 moléculas de açúcar) dos laticínios."},
+  {id:"b",t:"Galactose.",e:"Pegadinha: a galactose também vem do leite, mas é um monossacarídeo (1 molécula)."},
+  {id:"c",t:"Frutose.",e:"A frutose é um monossacarídeo das frutas."},
+  {id:"d",t:"Amido.",e:"O amido é um polissacarídeo (carboidrato complexo)."}]},
+ {tema:"Carboidratos",p:"Profissionais da saúde esportiva costumam indicar carboidratos simples a atletas antes da atividade física porque esses carboidratos:",alts:[
+  {id:"a",t:"são digeridos e absorvidos rapidamente e logo usados na produção de energia.",ok:true,e:"É o motivo dado pelo livro."},
+  {id:"b",t:"não são digeridos nem absorvidos pelo corpo.",e:"Isso vale para as fibras."},
+  {id:"c",t:"têm a principal função estrutural do organismo.",e:"A função estrutural é das proteínas."},
+  {id:"d",t:"são grandes cadeias de digestão demorada.",e:"Isso descreve os carboidratos complexos (polissacarídeos)."}]},
+ {tema:"Índice glicêmico",p:"Pessoas com diabetes, que precisam controlar a glicemia, devem dar preferência a alimentos de:",alts:[
+  {id:"a",t:"baixo índice glicêmico, como as leguminosas.",ok:true,e:"O livro recomenda os de baixo índice glicêmico (algumas frutas, leite, leguminosas) a quem precisa controlar a glicemia."},
+  {id:"b",t:"alto índice glicêmico, como pão, batata e macarrão.",e:"Esses alteram rapidamente a glicemia; são indicados a atletas."},
+  {id:"c",t:"alto índice glicêmico, porque aumentam a glicemia mais devagar.",e:"Alto índice glicêmico aumenta a glicemia rapidamente, não devagar."},
+  {id:"d",t:"qualquer tipo, porque os carboidratos não alteram a glicemia.",e:"O consumo de carboidratos aumenta a glicemia."}]},
+ {tema:"Fibras",p:"Sobre as fibras alimentares, é correto afirmar que:",alts:[
+  {id:"a",t:"não são digeridas nem absorvidas, mas ajudam a movimentar o bolo alimentar e as fezes e reduzem a absorção de colesterol.",ok:true,e:"Tudo isso está no texto sobre fibras (p. 20)."},
+  {id:"b",t:"são a principal fonte de energia do nosso corpo.",e:"As fibras não têm importância calórica."},
+  {id:"c",t:"são proteínas de origem animal.",e:"São polissacarídeos de origem vegetal, como a celulose."},
+  {id:"d",t:"aparecem em grande quantidade em refrigerantes e salgadinhos.",e:"As fibras estão em integrais, verduras, grãos, frutas com casca, sementes e cereais."}]},
+ {tema:"Proteínas",p:"Os aminoácidos essenciais são aqueles que:",alts:[
+  {id:"a",t:"devem ser obtidos obrigatoriamente pela alimentação.",ok:true,e:"Essenciais = o corpo não fabrica; precisam vir da comida."},
+  {id:"b",t:"o nosso corpo consegue produzir naturalmente.",e:"Esses são os não essenciais (pegadinha clássica!)."},
+  {id:"c",t:"aceleram as reações químicas do corpo.",e:"Quem acelera as reações são as enzimas."},
+  {id:"d",t:"não são absorvidos e saem nas fezes.",e:"O que sai nas fezes são as moléculas não digeridas completamente."}]},
+ {tema:"Enzimas",p:"As enzimas são ________ que têm a função de ________. Complete corretamente:",alts:[
+  {id:"a",t:"proteínas — acelerar as reações químicas do corpo.",ok:true,e:"Definição do livro: enzimas são proteínas que aceleram as reações químicas."},
+  {id:"b",t:"lipídios — armazenar energia no tecido adiposo.",e:"Quem fica guardado no tecido adiposo são os lipídios, mas eles não são enzimas."},
+  {id:"c",t:"vitaminas — permitir a coagulação do sangue.",e:"A coagulação depende da vitamina K; enzimas não são vitaminas."},
+  {id:"d",t:"carboidratos — formar as fibras dos vegetais.",e:"A celulose (fibra) é um carboidrato, não uma enzima."}]},
+ {tema:"Lipídios",p:"O consumo exagerado de gorduras saturadas pode aumentar o LDL no sangue e favorecer:",alts:[
+  {id:"a",t:"a aterosclerose, formação de placas que obstruem as artérias.",ok:true,e:"O LDL tende a se acumular nas artérias, favorecendo a aterosclerose."},
+  {id:"b",t:"o escorbuto.",e:"O escorbuto é causado pela falta de vitamina C."},
+  {id:"c",t:"o raquitismo.",e:"O raquitismo é causado pela falta de vitamina D na infância."},
+  {id:"d",t:"o bócio carencial.",e:"O bócio carencial é prevenido pelo iodo."}]},
+ {tema:"Vitaminas",p:"A principal fonte de vitamina D para o corpo humano é:",alts:[
+  {id:"a",t:"a produção na pele exposta ao sol, pela ação dos raios UVB.",ok:true,e:"O livro destaca: a maior fonte de vitamina D não é a alimentação, e sim a pele exposta ao sol."},
+  {id:"b",t:"as frutas cítricas, como acerola e laranja.",e:"Frutas cítricas são fonte de vitamina C."},
+  {id:"c",t:"os vegetais folhosos, como couve e brócolis.",e:"Os folhosos são fonte de vitamina K (e de vários minerais)."},
+  {id:"d",t:"o sal de cozinha.",e:"O sal de cozinha é fonte de sódio e recebe a adição de iodo."}]},
+ {tema:"Sais minerais",p:"Anemia, fraqueza e palidez são efeitos do baixo consumo de qual mineral?",alts:[
+  {id:"a",t:"Ferro.",ok:true,e:"O ferro forma a hemoglobina e transporta oxigênio no sangue."},
+  {id:"b",t:"Flúor.",e:"A falta de flúor está ligada ao surgimento de cáries."},
+  {id:"c",t:"Iodo.",e:"A falta de iodo causa atraso no crescimento e baixo funcionamento da tireoide."},
+  {id:"d",t:"Sódio.",e:"A falta de sódio causa desidratação, câibras e pressão baixa."}]},
+ {tema:"Disfunções",p:"Uma pessoa que já tem o corpo forte se enxerga como fraca e magra, quer ganhar músculos de forma exagerada e se submete a dietas pouco saudáveis e a exercícios em excesso. Essa descrição corresponde à:",alts:[
+  {id:"a",t:"vigorexia.",ok:true,e:"É a definição do livro para vigorexia, mais comum em homens."},
+  {id:"b",t:"anorexia nervosa.",e:"Na anorexia, a preocupação é com o ganho de peso, e a pessoa restringe a alimentação ao máximo."},
+  {id:"c",t:"bulimia nervosa.",e:"A bulimia tem episódios de descontrole alimentar seguidos de culpa."},
+  {id:"d",t:"esteatose hepática.",e:"Esteatose hepática é o acúmulo de gordura no fígado, não uma disfunção alimentar."}]}
+];
+
+/* ====== EMBARALHAMENTO COM SEMENTE FIXA (mulberry32) ====== */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+var rnd=mulberry32(1014);
+Q.forEach(function(q){ var arr=q.alts.slice(); for(var i=arr.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp; } q.ordem=arr; });
+
+/* ====== ESTADO ====== */
+var CHAVE=KIT+'_quiz_v1'; var mem={}; var estado=carregar();
+function carregar(){ try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s);}catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); } return {resp:{},enviado:false}; }
+function salvar(){ var s=JSON.stringify(estado); try{ localStorage.setItem(CHAVE,s);}catch(e){ mem[CHAVE]=s; } var d=new Date(); document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR'); }
+var LETRAS='ABCDEFGHJKLMNPQRSTUVWXYZ';
+function gerarCodigo(ac){ var xx=(ac<10?'0':'')+ac; var yy=LETRAS[Math.floor(Math.random()*LETRAS.length)]+LETRAS[Math.floor(Math.random()*LETRAS.length)]; return 'MED-'+xx+'-'+yy; }
+
+function render(){
+  var c=document.getElementById('questoes'); var h='';
+  Q.forEach(function(q,i){
+    h+='<div class="q" id="q'+i+'"><span class="tema">'+q.tema+'</span><div class="num">Questão '+(i+1)+' de '+Q.length+'</div><h3>'+q.p+'</h3>';
+    q.ordem.forEach(function(a,k){
+      var letra='abcd'[k]; var sel=estado.resp[i]===a.id;
+      var cls='alt'+(sel?' sel':'');
+      if(estado.gabarito){ if(a.ok) cls+=' certa'; else if(sel) cls+=' marcada-errada'; else cls+=' errada'; }
+      h+='<label class="'+cls+'"><input type="radio" name="q'+i+'" value="'+a.id+'" '+(sel?'checked':'')+' '+(estado.enviado?'disabled':'')+' onchange="marcar('+i+',\''+a.id+'\')"> <b>'+letra+')</b> '+a.t;
+      if(estado.gabarito){ h+='<div class="exp show">'+(a.ok?'✅ ':'❌ ')+a.e+'</div>'; }
+      h+='</label>';
+    });
+    h+='</div>';
+  });
+  c.innerHTML=h;
+  atualizarBarra();
+  if(estado.enviado){ mostrarEnviado(); }
+  atualizarTrilhaFim();
+}
+function marcar(i,id){ if(estado.enviado) return; estado.resp[i]=id; salvar(); var q=document.getElementById('q'+i); var labs=q.querySelectorAll('.alt'); for(var k=0;k<labs.length;k++){ labs[k].classList.toggle('sel', labs[k].querySelector('input').value===id); } atualizarBarra(); }
+function atualizarBarra(){ var n=Object.keys(estado.resp).length; document.getElementById('barra').style.width=(n/Q.length*100)+'%'; var b=document.getElementById('btn-enviar'); if(!estado.enviado){ b.disabled=n<Q.length; b.textContent=n<Q.length?'📨 Enviar respostas ('+n+' de '+Q.length+' respondidas)':'📨 Enviar respostas'; } }
+function enviar(){
+  if(estado.enviado) return;
+  if(Object.keys(estado.resp).length<Q.length) return;
+  var ac=0; Q.forEach(function(q,i){ var a=q.alts.filter(function(x){return x.id===estado.resp[i];})[0]; if(a&&a.ok) ac++; });
+  estado.acertos=ac; estado.total=Q.length; estado.codigo=gerarCodigo(ac); estado.enviado=true; estado.concluido=true; estado.concluidoEm=new Date().toISOString();
+  salvar(); render(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function mostrarEnviado(){
+  var b=document.getElementById('btn-enviar'); b.disabled=true; b.textContent='✅ Quiz enviado — respostas travadas';
+  document.getElementById('codigo').classList.add('show'); document.getElementById('cod').textContent=estado.codigo;
+  document.getElementById('codtxt').textContent='Anote este código para os pais. Ele abre o gabarito comentado e o relatório no Início.';
+  document.getElementById('gab').classList.add('show');
+}
+function abrirGab(){ var v=document.getElementById('gab-in').value.trim().toUpperCase(); var m=document.getElementById('gab-msg'); if(v===estado.codigo||v==='PAIS-77'){ estado.gabarito=true; salvar(); render(); m.innerHTML='<span style="color:#b6f0aa">Gabarito liberado: '+estado.acertos+' acertos de '+Q.length+'.</span>'; } else { m.innerHTML='<span style="color:#ffb3bb">Código incorreto.</span>'; } }
+function atualizarTrilhaFim(){
+  var box=document.getElementById('trilha-fim'), txt=document.getElementById('trilha-fim-txt'), btn=document.getElementById('btn-prox'); var h3=box.querySelector('h3');
+  if(estado.concluido||trilhaLiberada()){ h3.textContent='✅ Quiz enviado — Resumo destravado!'; txt.textContent=estado.concluido?'Agora use o Resumo para fechar as dúvidas que o Quiz mostrou.':'Trilha liberada pelos pais.'; btn.classList.remove('off'); }
+  else { h3.textContent='🔒 Próxima etapa: Resumo'; txt.textContent='Destrava quando você enviar o Quiz.'; btn.classList.add('off'); }
+  marcarNav();
+}
+function exportar(){ var blob=new Blob([JSON.stringify(estado,null,2)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='quiz_horta-vertical.json'; a.click(); }
+function importar(ev){ var f=ev.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false);}catch(e){ mostrarModal('❌ Arquivo inválido.',false);} }; r.readAsText(f); }
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Apagar as respostas deste Quiz? (Se ele já foi enviado, o código e a conclusão são mantidos.)',true); }
+function mostrarModal(txt,confirmar){ document.getElementById('modal-txt').innerHTML=txt; document.getElementById('modal').classList.add('show'); document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none'; document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar&&acaoZerar){ if(!estado.enviado){ estado={resp:{},enviado:false}; salvar(); render(); } else { mostrarModal('O Quiz já foi enviado: as respostas ficam travadas. Para refazer do zero, use "Zerar o kit inteiro" no Início.',false); acaoZerar=null; return; } } acaoZerar=null; fecharModal(); }; }
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+if(checarTrava()){ render(); } else { marcarNav(); }
+</script>
+</body>
+</html>

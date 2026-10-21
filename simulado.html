@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado · Horta Vertical · Ciências 7º</title>
+<style>
+  :root{--fundo:#150f18;--fundo2:#1f1724;--borda:#33263a;--borda2:#4a3756;--verde:#7be36b;--magenta:#e05cff;--laranja:#ff8f3a;--limao:#f4e04d;--vermelho:#e0403f;--azul:#13244a;--texto:#f2ecf4;--cinza:#a596ab}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Trebuchet MS',Verdana,'Segoe UI',sans-serif;background:radial-gradient(900px 420px at 50% -8%,#22203a,#150f18 62%),var(--fundo);color:var(--texto);line-height:1.6;padding-bottom:60px;font-size:17px}
+  header{background:linear-gradient(120deg,#0e1a38,#13244a);padding:26px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:6px solid var(--vermelho)}
+  header .selo{font-size:.76rem;letter-spacing:2px;color:#c9d6f5;text-transform:uppercase}
+  header h1{font-size:1.5rem;margin:6px 0 2px}
+  header p{color:#dbe4fa;font-size:.92rem}
+  .wrap{max-width:820px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--fundo2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:var(--vermelho);color:#fff;font-weight:bold}
+  .intro{background:var(--fundo2);border:1px solid var(--borda);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:#ff8a89;font-size:1.1rem;margin-bottom:8px}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--fundo2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--fundo);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .codigo{background:linear-gradient(120deg,#16301a,#1d4a1f);border:2px solid var(--verde);border-radius:14px;padding:16px;text-align:center;margin-bottom:16px;display:none;position:sticky;top:6px;z-index:5}
+  .codigo.show{display:block}
+  .codigo .cod{font-size:1.8rem;font-weight:bold;letter-spacing:3px;color:#b6f0aa;margin:6px 0}
+  .progresso{height:10px;background:var(--borda);border-radius:6px;overflow:hidden;margin-bottom:16px}
+  .progresso div{height:100%;background:var(--vermelho);width:0;transition:width .3s}
+  .q{background:var(--fundo2);border:1px solid var(--borda);border-radius:16px;padding:16px;margin-bottom:14px}
+  .q .num{color:#ff8a89;font-weight:bold;font-size:.8rem;letter-spacing:1px;text-transform:uppercase}
+  .q .tipo{float:right;font-size:.7rem;color:#fff;border-radius:10px;padding:2px 8px;background:#2a3a5a}
+  .q .tipo.som{background:#5a2a7a}.q .tipo.rom{background:#1f5a4a}.q .tipo.dis{background:#7a3a1a}
+  .q h3{font-size:1rem;margin:6px 0 10px;font-weight:600}
+  .afirm{background:#1a131e;border-left:3px solid var(--borda2);padding:8px 12px;margin:6px 0;border-radius:0 8px 8px 0;font-size:.94rem}
+  .afirm.ok{border-left-color:var(--verde)}.afirm.no{border-left-color:#777;color:#aaa}
+  .alt{display:block;background:#1a131e;border:1px solid var(--borda2);border-radius:10px;padding:10px 12px;margin:6px 0;cursor:pointer}
+  .alt:hover{border-color:#ff8a89}
+  .alt input{margin-right:8px}
+  .alt.sel{border-color:#ff8a89;background:#2a1620}
+  .alt.certa{border-color:var(--verde);background:#15301a}
+  .alt.errada{border-color:#555;background:#1d1a1f;color:#aaa}
+  .alt.marcada-errada{border-color:var(--vermelho);background:#3a1414}
+  .exp{margin-top:8px;font-size:.88rem;padding:8px 10px;border-radius:8px;background:#1a131e;border-left:3px solid var(--limao);display:none}
+  .exp.show{display:block}
+  .soma input{width:110px;padding:9px;border-radius:8px;border:1px solid var(--borda2);background:#120d15;color:var(--texto);font-size:1.05rem;text-align:center}
+  .soma .lab{font-size:.85rem;color:var(--cinza);margin-left:8px}
+  .q textarea{width:100%;min-height:120px;background:#120d15;color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:9px;font-family:inherit;font-size:.95rem;margin-top:6px}
+  .modelo{display:none;margin-top:10px;padding:10px 12px;background:#15301a;border:1px solid var(--verde);border-radius:8px;font-size:.9rem}
+  .modelo.show{display:block}
+  .enviar{width:100%;background:var(--vermelho);color:#fff;border:none;border-radius:12px;padding:14px;font-size:1.05rem;font-weight:bold;margin:10px 0}
+  .enviar:disabled{background:#2a2230;color:#7d6f83;cursor:not-allowed}
+  .gab{background:var(--fundo2);border:1px dashed var(--magenta);border-radius:14px;padding:16px;margin:16px 0;display:none}
+  .gab.show{display:block}
+  .gab input{padding:9px;border-radius:8px;border:1px solid var(--borda2);background:#120d15;color:var(--texto);font-size:1rem;width:180px;text-transform:uppercase}
+  .gab button{background:var(--magenta);color:#2a0633;border:none;border-radius:8px;padding:9px 14px;font-weight:bold;margin-left:6px}
+  .gab .msg{margin-top:8px;font-size:.9rem}
+  .fim{background:linear-gradient(120deg,#16301a,#1d3a1f);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .fim h3{color:#b6f0aa;margin-bottom:8px}
+  .fim a{display:inline-block;margin-top:8px;background:var(--verde);color:#0d2a09;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(10,6,12,.97);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--fundo2);border:1px solid var(--vermelho);border-radius:14px;padding:22px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal .big{font-size:2.2rem}
+  .modal a,.modal button{display:inline-block;background:var(--vermelho);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-weight:bold;text-decoration:none}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Colégio Legado · Ciências · 7º ano</div>
+  <h1>📝 Simulado — A Grande Colheita</h1>
+  <p>28 questões no estilo da prova · múltipla escolha, somatório, números romanos e discursiva · Código SIM</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html">🎯 Quiz</a>
+    <a href="resumo.html">🗺️ Resumo</a>
+    <a class="on" href="simulado.html">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="codigo" id="codigo"><div>Seu código de liberação</div><div class="cod" id="cod"></div><div id="codtxt"></div></div>
+
+  <div class="intro">
+    <h2>📝 Valendo!</h2>
+    <p>Faça como se fosse a prova: <b>28 questões</b>, todas obrigatórias. Nas de <b>somatório</b>, some os números das afirmativas corretas. Nas de <b>números romanos</b>, leia as afirmativas I, II, III e IV e escolha a alternativa certa. Na <b>discursiva</b>, escreva com as suas palavras (os pais corrigem com a resposta-modelo do gabarito). Depois de enviar, as respostas travam e sai o código <b>SIM</b>.</p>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div class="progresso"><div id="barra"></div></div>
+  <div id="questoes"></div>
+  <button class="enviar" id="btn-enviar" onclick="enviar()" disabled>📨 Enviar simulado (responda todas)</button>
+
+  <div class="gab" id="gab">
+    <b>🔑 Gabarito comentado:</b> digite o código SIM que apareceu no topo.<br>
+    <input id="gab-in" placeholder="SIM-XX-YY"><button onclick="abrirGab()">Ver gabarito</button>
+    <div class="msg" id="gab-msg"></div>
+  </div>
+
+  <div class="fim" id="fim" style="display:none">
+    <h3>🏁 Trilha completa — a torre está colhida!</h3>
+    <p>Você percorreu os quatro materiais na ordem. Agora tudo fica aberto para revisar quantas vezes quiser até a prova.</p>
+    <a href="index.html">🏠 Voltar ao início</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🌱🥕🍊 Boa prova!</div>
+</div>
+
+<div class="modal-bg" id="lock">
+  <div class="modal">
+    <div class="big">🔒</div>
+    <p><b>Esta etapa ainda está trancada.</b></p>
+    <p id="lock-txt">Para abrir o Simulado, leia o Resumo até o fim.</p>
+    <a href="index.html">Voltar ao início</a>
+  </div>
+</div>
+<div class="modal-bg" id="modal" style="background:rgba(0,0,0,.75)">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='horta_vertical';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function checarTrava(){
+  if(podeAbrir('simulado')) return true;
+  var txt='Para abrir o Simulado, leia o Resumo até o fim e clique em "Li o resumo até o fim".';
+  if(!etapaConcluida('quiz')) txt='Para abrir o Simulado, envie o Quiz e leia o Resumo até o fim.';
+  if(!etapaConcluida('leitura')) txt='Para abrir o Simulado, conclua a Leitura Guiada, envie o Quiz e leia o Resumo até o fim.';
+  document.getElementById('lock-txt').textContent=txt;
+  document.getElementById('lock').classList.add('show');
+  document.querySelector('.wrap').style.filter='blur(8px)';
+  document.querySelector('.wrap').setAttribute('aria-hidden','true');
+  return false;
+}
+
+/* ====== QUESTÕES (conteúdo do livro Bernoulli Ciências L4, Cap. 9) — correta guardada pelo id ====== */
+var Q=[
+ {tipo:"mc",p:"Um levantador de peso e um maratonista têm treinos diferentes, mas o livro afirma que ambos precisam de alimentos construtores. Esses alimentos são ricos em ________ e têm função ________.",alts:[
+  {id:"a",t:"proteínas — estrutural",ok:true,e:"Alimentos construtores são ricos em proteínas, de função estrutural (músculos e ossos)."},
+  {id:"b",t:"carboidratos — energética",e:"Carboidratos têm função energética; não são os alimentos construtores."},
+  {id:"c",t:"vitaminas — reguladora",e:"Vitaminas têm função reguladora; não são os construtores."},
+  {id:"d",t:"fibras — energética",e:"Fibras não têm importância calórica e não são construtoras."}]},
+ {tipo:"mc",p:"Frutas, legumes, verduras e cereais fornecem substâncias que ajudam a manter em equilíbrio o metabolismo. Essas substâncias são principalmente:",alts:[
+  {id:"a",t:"vitaminas e sais minerais.",ok:true,e:"É a função reguladora descrita na p. 9."},
+  {id:"b",t:"lipídios e proteínas.",e:"Lipídios são energéticos e proteínas são estruturais."},
+  {id:"c",t:"aminoácidos essenciais apenas.",e:"Aminoácidos formam proteínas (função estrutural)."},
+  {id:"d",t:"gorduras saturadas.",e:"Gorduras saturadas devem ser consumidas em pequena quantidade e não são reguladoras."}]},
+ {tipo:"mc",p:"Na tabela nutricional do pão de queijo apresentada no livro, o sódio da porção de 50 g aparece como 256 mg, com 13% de VD. Isso significa que:",alts:[
+  {id:"a",t:"a porção de 50 g fornece 13% do sódio que um adulto precisa em um dia.",ok:true,e:"O %VD indica quanto a porção representa do valor diário de um adulto."},
+  {id:"b",t:"100 g do produto têm apenas 13 mg de sódio.",e:"A tabela mostra 512 mg em 100 g; 13 é o %VD da porção."},
+  {id:"c",t:"o produto é formado por 13% de gordura.",e:"O número se refere ao sódio, não à gordura."},
+  {id:"d",t:"a pessoa deve comer 13 porções por dia.",e:"%VD não é recomendação de quantas porções comer."}]},
+ {tipo:"mc",p:"Leite, castanhas e nozes, frutas desidratadas e sucos de frutas passaram apenas por moagem, secagem ou pasteurização. Eles são classificados como alimentos:",alts:[
+  {id:"a",t:"minimamente processados.",ok:true,e:"In natura que passaram por processamento mínimo."},
+  {id:"b",t:"in natura.",e:"In natura não passam por processamento."},
+  {id:"c",t:"processados.",e:"Processados recebem sal, açúcar, óleo ou conservantes."},
+  {id:"d",t:"ultraprocessados.",e:"Ultraprocessados são fórmulas de substâncias e aditivos."}]},
+ {tipo:"mc",p:"Biscoitos recheados, salgadinhos, refrigerantes e achocolatados são formulações feitas majoritariamente de substâncias extraídas ou derivadas de alimentos e de aditivos, com pouco ou nenhum alimento in natura. Esses produtos são:",alts:[
+  {id:"a",t:"ultraprocessados, que em excesso podem causar sérios riscos à saúde.",ok:true,e:"Definição e alerta dados pelo livro (pp. 12–13)."},
+  {id:"b",t:"minimamente processados, recomendados para uma dieta balanceada.",e:"A dieta balanceada se associa ao consumo de in natura."},
+  {id:"c",t:"in natura, pois vêm de plantas.",e:"Têm pouco ou nenhum alimento in natura."},
+  {id:"d",t:"processados, como o pão e a sardinha enlatada.",e:"Pão e sardinha enlatada são processados; esses produtos são ultraprocessados."}]},
+ {tipo:"mc",p:"Desde 2022, alguns alimentos industrializados trazem na embalagem o símbolo de uma lupa com a expressão “ALTO EM”. O objetivo desse símbolo é:",alts:[
+  {id:"a",t:"alertar o consumidor, de forma clara e objetiva, sobre grandes quantidades de açúcar adicionado, sódio ou gordura saturada.",ok:true,e:"É o que o livro diz sobre a regra de rotulagem de 2022."},
+  {id:"b",t:"indicar que o alimento é in natura.",e:"A lupa aparece em industrializados com muito açúcar, sódio ou gordura saturada."},
+  {id:"c",t:"mostrar a quantidade de fibras e de vitaminas.",e:"A lupa não destaca nutrientes desejáveis, e sim excessos."},
+  {id:"d",t:"informar apenas que o produto contém transgênicos.",e:"O rótulo pode informar transgênicos, mas a lupa trata de açúcar, sódio e gordura saturada."}]},
+ {tipo:"mc",p:"Quantas calorias são necessárias para elevar a temperatura de 1 mL de água de 25 °C para 30 °C?",alts:[
+  {id:"a",t:"5 calorias.",ok:true,e:"1 caloria eleva 1 mL em 1 °C; de 25 para 30 °C são 5 graus → 5 calorias."},
+  {id:"b",t:"30 calorias.",e:"Conta-se a diferença de temperatura (5 °C), não a temperatura final."},
+  {id:"c",t:"1 caloria.",e:"1 caloria eleva apenas 1 °C."},
+  {id:"d",t:"5 kcal.",e:"5 kcal seriam 5 000 calorias — mil vezes mais do que o necessário."}]},
+ {tipo:"mc",p:"Costuma-se dizer que um adulto precisa de cerca de 1 400 kcal por dia só para manter o corpo funcionando em repouso. Sobre esse metabolismo basal, o livro ressalta que ele:",alts:[
+  {id:"a",t:"varia com sexo, idade, massa corporal e composição corporal.",ok:true,e:"O valor de 1 400 kcal é aproximado; o metabolismo basal varia de pessoa para pessoa."},
+  {id:"b",t:"é exatamente igual para todas as pessoas.",e:"O livro diz o contrário: ele varia."},
+  {id:"c",t:"depende apenas da quantidade de água ingerida.",e:"Os fatores citados são sexo, idade, massa e composição corporal."},
+  {id:"d",t:"só existe quando a pessoa está fazendo exercícios.",e:"Metabolismo basal é justamente a energia gasta em repouso."}]},
+ {tipo:"mc",p:"Pessoas que ingerem mais quilocalorias do que o necessário armazenam a energia extra principalmente na forma de:",alts:[
+  {id:"a",t:"gordura.",ok:true,e:"É o que diz o livro (p. 13)."},
+  {id:"b",t:"fibras.",e:"Fibras não são digeridas nem absorvidas."},
+  {id:"c",t:"vitaminas.",e:"Vitaminas não são reserva de energia."},
+  {id:"d",t:"sais minerais.",e:"Sais minerais não armazenam energia."}]},
+ {tipo:"mc",p:"Carboidratos, proteínas e gorduras são chamados de macronutrientes porque:",alts:[
+  {id:"a",t:"devemos consumi-los em maior quantidade e suas moléculas, muito grandes, são digeridas em partes.",ok:true,e:"Definição da p. 19."},
+  {id:"b",t:"o corpo precisa deles em quantidades muito pequenas.",e:"Isso descreve os micronutrientes."},
+  {id:"c",t:"não são digeridos nem absorvidos.",e:"Isso descreve as fibras."},
+  {id:"d",t:"existem apenas nos alimentos ultraprocessados.",e:"Estão em muitos alimentos, como pães, carnes e óleos."}]},
+ {tipo:"mc",p:"Assinale a alternativa que apresenta apenas monossacarídeos:",alts:[
+  {id:"a",t:"Glicose, frutose e galactose.",ok:true,e:"Os três são formados por uma única molécula de açúcar."},
+  {id:"b",t:"Sacarose, lactose e maltose.",e:"Esses são dissacarídeos (duas moléculas)."},
+  {id:"c",t:"Amido e celulose.",e:"Esses são polissacarídeos."},
+  {id:"d",t:"Glicose, lactose e amido.",e:"Mistura: lactose é dissacarídeo e amido é polissacarídeo."}]},
+ {tipo:"mc",p:"Os principais polissacarídeos citados no livro são o amido e a celulose. As funções deles são, respectivamente:",alts:[
+  {id:"a",t:"papel energético na alimentação e função estrutural nos vegetais (fibras).",ok:true,e:"Amido = energia; celulose = estrutura dos vegetais."},
+  {id:"b",t:"função estrutural nos vegetais e papel energético na alimentação.",e:"A ordem está trocada."},
+  {id:"c",t:"função reguladora e coagulação do sangue.",e:"Nenhum dos dois tem essas funções."},
+  {id:"d",t:"acelerar reações químicas e formar membranas.",e:"Isso é das enzimas e dos fosfolipídios."}]},
+ {tipo:"mc",p:"Após uma refeição rica em carboidratos, a quantidade de glicose no sangue aumenta e, depois, diminui aos poucos até a refeição seguinte. O aumento da glicemia é chamado de:",alts:[
+  {id:"a",t:"hiperglicemia.",ok:true,e:"Hiperglicemia = aumento da glicemia."},
+  {id:"b",t:"hipovitaminose.",e:"Hipovitaminose é consumo de vitaminas abaixo do recomendado."},
+  {id:"c",t:"metabolismo basal.",e:"Metabolismo basal é a energia mínima em repouso."},
+  {id:"d",t:"avitaminose.",e:"Avitaminose é deficiência severa de vitaminas."}]},
+ {tipo:"mc",p:"(Baseada na tabela TBCA do livro) Entre arroz branco (IG alto, 0,4 g de fibras), mel (IG alto, 0,2 g), feijão preto (IG baixo, 7,5 g) e aveia (IG baixo, 10,6 g), os dois mais recomendados para quem deseja manter o controle glicêmico são:",alts:[
+  {id:"a",t:"feijão preto e aveia, por terem índice glicêmico baixo e muitas fibras.",ok:true,e:"IG baixo e muitas fibras ajudam a controlar a glicemia."},
+  {id:"b",t:"arroz branco e mel, por serem carboidratos simples.",e:"Os dois têm IG alto: elevam a glicemia rapidamente."},
+  {id:"c",t:"mel e aveia, por terem mais calorias.",e:"Ter mais calorias não ajuda no controle glicêmico; o mel tem IG alto."},
+  {id:"d",t:"arroz branco e feijão preto, por terem as menores calorias.",e:"O critério é o índice glicêmico, e o arroz branco tem IG alto."}]},
+ {tipo:"mc",p:"Sobre a digestão das proteínas, é correto afirmar que:",alts:[
+  {id:"a",t:"começa no estômago, continua no intestino delgado, e os aminoácidos são absorvidos pela parede do intestino.",ok:true,e:"É o esquema das pp. 22–23."},
+  {id:"b",t:"termina no estômago, onde os aminoácidos são absorvidos.",e:"A absorção acontece pela parede do intestino."},
+  {id:"c",t:"as proteínas inteiras passam diretamente para o sangue.",e:"No início da digestão os aminoácidos ainda não estão no sangue; as proteínas precisam ser quebradas."},
+  {id:"d",t:"as moléculas não digeridas viram fibras e são absorvidas.",e:"As moléculas não digeridas completamente não são absorvidas e saem nas fezes."}]},
+ {tipo:"mc",p:"Em uma dieta vegetariana ou vegana, a carne e os derivados de animais podem ser substituídos de forma saudável principalmente por:",alts:[
+  {id:"a",t:"leguminosas, como o feijão e a soja.",ok:true,e:"O livro cita as leguminosas como fontes de proteína."},
+  {id:"b",t:"refrigerantes e achocolatados.",e:"São ultraprocessados e não são fontes de proteína."},
+  {id:"c",t:"óleos vegetais refinados.",e:"Óleos são lipídios, não fontes de proteína."},
+  {id:"d",t:"açúcar de mesa.",e:"Sacarose é carboidrato."}]},
+ {tipo:"mc",p:"Quando não são usados como fonte de energia, os lipídios ficam armazenados no tecido adiposo, em regiões como o abdome, as palmas das mãos e as plantas dos pés, onde também:",alts:[
+  {id:"a",t:"reduzem impactos.",ok:true,e:"O livro diz que o tecido adiposo nessas regiões reduz impactos."},
+  {id:"b",t:"produzem vitamina D.",e:"A vitamina D é produzida na pele com o sol."},
+  {id:"c",t:"aceleram as reações químicas.",e:"Isso é função das enzimas."},
+  {id:"d",t:"produzem colágeno.",e:"O colágeno está ligado à vitamina C."}]},
+ {tipo:"mc",p:"As ceras que revestem folhas e frutos, deixando-os brilhantes e diminuindo a perda de água do vegetal, são lipídios chamados de:",alts:[
+  {id:"a",t:"cerídeos.",ok:true,e:"Cerídeos são lipídios simples (ceras)."},
+  {id:"b",t:"fosfolipídios.",e:"Fosfolipídios formam as membranas plasmáticas."},
+  {id:"c",t:"esteróis.",e:"Esteróis atuam na produção de hormônios e na absorção de vitaminas."},
+  {id:"d",t:"polissacarídeos.",e:"Polissacarídeos são carboidratos, não lipídios."}]},
+ {tipo:"mc",p:"Os fosfolipídios (lipídios + átomos de fósforo) são os principais componentes:",alts:[
+  {id:"a",t:"das membranas plasmáticas.",ok:true,e:"É o exemplo de lipídio complexo dado no livro."},
+  {id:"b",t:"do esmalte dos dentes.",e:"O esmalte está ligado ao flúor."},
+  {id:"c",t:"da hemoglobina.",e:"A hemoglobina está ligada ao ferro."},
+  {id:"d",t:"das fibras vegetais.",e:"As fibras são polissacarídeos, como a celulose."}]},
+ {tipo:"mc",p:"Também conhecida como retinol, esta vitamina é importante para a integridade da retina, para o sistema imunológico e para a síntese de melanina. Ela é encontrada em cenoura, tomate e abóbora. Trata-se da vitamina:",alts:[
+  {id:"a",t:"A.",ok:true,e:"Vitamina A = retinol."},
+  {id:"b",t:"C.",e:"A vitamina C está ligada ao colágeno e às frutas cítricas."},
+  {id:"c",t:"K.",e:"A vitamina K está ligada à coagulação."},
+  {id:"d",t:"B12.",e:"A B12 (cobalamina) ajuda na produção de glóbulos vermelhos."}]},
+ {tipo:"mc",p:"(Tudo conectado) Na época das Grandes Navegações, marinheiros apresentavam gengivas sangrando, fraqueza e dores nas articulações. Os experimentos do médico escocês James Lind mostraram que a doença era:",alts:[
+  {id:"a",t:"o escorbuto, causado pela falta de vitamina C.",ok:true,e:"Com limões e laranjas, os sintomas diminuíram."},
+  {id:"b",t:"o raquitismo, causado pela falta de vitamina D.",e:"Raquitismo atrasa o crescimento das crianças."},
+  {id:"c",t:"o beribéri, causado pela falta de vitamina B1.",e:"O beribéri está ligado à B1, mas não foi a doença dos navegantes descrita."},
+  {id:"d",t:"a anemia, causada pela falta de ferro.",e:"A anemia está ligada ao ferro."}]},
+ {tipo:"mc",p:"Um ferimento que demora a parar de sangrar pode estar ligado à falta da vitamina essencial para a coagulação do sangue, abundante em espinafre, couve e brócolis. Essa vitamina é a:",alts:[
+  {id:"a",t:"vitamina K.",ok:true,e:"A vitamina K é essencial para a coagulação."},
+  {id:"b",t:"vitamina E.",e:"A vitamina E é antioxidante."},
+  {id:"c",t:"vitamina D.",e:"A vitamina D ajuda a depositar cálcio nos ossos."},
+  {id:"d",t:"vitamina A.",e:"A vitamina A cuida da retina e da imunidade."}]},
+ {tipo:"som",p:"Sobre os MICRONUTRIENTES e as VITAMINAS, some os números das afirmativas CORRETAS:",itens:[
+  {v:1,t:"Os micronutrientes, como as vitaminas e os sais minerais, são necessários em pequenas quantidades.",ok:true,e:"Correta."},
+  {v:2,t:"Hipervitaminose é a deficiência severa de vitaminas.",e:"Errada: deficiência severa é avitaminose; hipervitaminose é intoxicação por excesso."},
+  {v:4,t:"A vitamina E tem efeito antioxidante, protegendo as células dos danos causados pelos radicais livres.",ok:true,e:"Correta."},
+  {v:8,t:"A falta de vitamina B9 (ácido fólico) pode causar espinha bífida em recém-nascidos.",ok:true,e:"Correta."},
+  {v:16,t:"A vitamina D é obtida principalmente pela alimentação, e sua falta nos adultos causa escorbuto.",e:"Errada: a maior fonte é o sol, e a falta nos adultos causa osteomalácia (escorbuto é falta de vitamina C)."}]},
+ {tipo:"som",p:"Sobre os SAIS MINERAIS, some os números das afirmativas CORRETAS:",itens:[
+  {v:1,t:"O ferro participa da formação da hemoglobina e do transporte de oxigênio no sangue.",ok:true,e:"Correta."},
+  {v:2,t:"O flúor auxilia na manutenção do esmalte dos dentes, prevenindo as cáries.",ok:true,e:"Correta."},
+  {v:4,t:"O iodo é encontrado principalmente no leite e previne a anemia.",e:"Errada: o iodo vem dos frutos do mar e da adição ao sal de cozinha e previne o bócio carencial."},
+  {v:8,t:"O potássio é essencial para a condução dos impulsos nervosos nos neurônios.",ok:true,e:"Correta."},
+  {v:16,t:"O baixo consumo de sódio causa pressão arterial alta.",e:"Errada: a falta de sódio causa pressão arterial baixa."}]},
+ {tipo:"rom",p:"Analise as afirmativas sobre CARBOIDRATOS e FIBRAS:",itens:[
+  {n:"I",t:"Os carboidratos simples são rapidamente digeridos e absorvidos, sendo usados na produção de energia.",ok:true,e:"Correta."},
+  {n:"II",t:"A celulose é o principal exemplo de fibra alimentar.",ok:true,e:"Correta."},
+  {n:"III",t:"Alimentos de alto índice glicêmico, como pão, batata e macarrão, são os mais indicados para pessoas com diabetes.",e:"Errada: são indicados a atletas; pessoas com diabetes devem preferir os de baixo índice glicêmico."},
+  {n:"IV",t:"Calcula-se que um adulto precise consumir, no mínimo, 25 gramas de fibras por dia.",ok:true,e:"Correta."}],
+  alts:[{id:"a",t:"Apenas I, II e IV.",ok:true,e:"Só a III é errada."},{id:"b",t:"Apenas I e III.",e:"A III é errada, e faltam II e IV."},{id:"c",t:"Apenas II e III.",e:"A III é errada."},{id:"d",t:"I, II, III e IV.",e:"A III é errada."}]},
+ {tipo:"rom",p:"Analise as afirmativas sobre as DOENÇAS ASSOCIADAS À OBESIDADE:",itens:[
+  {n:"I",t:"A esteatose hepática é o acúmulo anormal de gordura no fígado.",ok:true,e:"Correta."},
+  {n:"II",t:"A apneia é a sensação de dificuldade em respirar.",e:"Errada: essa é a dispneia. A apneia é a interrupção temporária da respiração durante o sono."},
+  {n:"III",t:"No diabetes, o corpo tem dificuldade em regular o açúcar no sangue, por produção inadequada de insulina pelo pâncreas ou porque as células não a usam com eficácia.",ok:true,e:"Correta."},
+  {n:"IV",t:"A obesidade depende apenas de fatores genéticos; os hábitos não influenciam.",e:"Errada: ela é multifatorial — comportamental e genética."}],
+  alts:[{id:"a",t:"Apenas I e III.",ok:true,e:"II e IV são erradas."},{id:"b",t:"Apenas II e IV.",e:"Essas são justamente as erradas."},{id:"c",t:"Apenas I, III e IV.",e:"A IV é errada."},{id:"d",t:"I, II, III e IV.",e:"II e IV são erradas."}]},
+ {tipo:"rom",p:"Analise as afirmativas sobre as DISFUNÇÕES ALIMENTARES:",itens:[
+  {n:"I",t:"Na anorexia nervosa, a autoimagem distorcida leva à restrição máxima da alimentação e a uma perda grave de massa corporal.",ok:true,e:"Correta."},
+  {n:"II",t:"A bulimia nervosa é caracterizada por episódios de descontrole alimentar seguidos de sentimentos de arrependimento e culpa.",ok:true,e:"Correta."},
+  {n:"III",t:"A vigorexia é predominante em mulheres e se caracteriza pelo medo de ganhar músculos.",e:"Errada: é predominante em homens, que desejam exageradamente ganhar massa muscular."},
+  {n:"IV",t:"Padrões estéticos irreais e filtros nas mídias sociais podem levar a comparações injustas e a percepções desfavoráveis de si mesmo.",ok:true,e:"Correta."}],
+  alts:[{id:"a",t:"Apenas I, II e IV.",ok:true,e:"Só a III é errada."},{id:"b",t:"Apenas I e III.",e:"A III é errada."},{id:"c",t:"Apenas III e IV.",e:"A III é errada, e faltam I e II."},{id:"d",t:"I, II, III e IV.",e:"A III é errada."}]},
+ {tipo:"dis",p:"DISCURSIVA — Um adolescente quer ganhar massa muscular. Explique, com as suas palavras: (a) qual macronutriente forma os músculos e cite dois alimentos ricos nele; (b) o que acontece com esse nutriente durante a digestão; (c) a diferença entre aminoácidos essenciais e não essenciais e por que alguns atletas usam suplementos de aminoácidos.",
+  modelo:"Resposta-modelo (para os pais corrigirem): (a) As proteínas, que têm função estrutural (músculos, ossos e pele). Fontes: carnes, ovos, leite e derivados, feijão, soja (vale qualquer duas). (b) Na digestão, as proteínas são quebradas em aminoácidos — começa no estômago e continua no intestino delgado; os aminoácidos são absorvidos pela parede do intestino e levados pelo sangue até as células, onde são usados para produzir (síntese) proteínas humanas. (c) Os não essenciais o corpo produz sozinho; os essenciais precisam vir obrigatoriamente da alimentação. Os atletas usam suplementos de aminoácidos porque eles são as peças para formar as proteínas dos músculos. Considerar certa a resposta que acertar os três itens; parcialmente certa se acertar dois."}
+];
+
+/* ====== EMBARALHAMENTO COM SEMENTE FIXA (mulberry32) — correta guardada pelo id ====== */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+var rnd=mulberry32(1004);
+Q.forEach(function(q){ if(q.alts){ var arr=q.alts.slice(); for(var i=arr.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp; } q.ordem=arr; } if(q.tipo==='som'){ q.soma=q.itens.filter(function(x){return x.ok;}).reduce(function(a,x){return a+x.v;},0); } });
+var OBJ=Q.filter(function(q){return q.tipo!=='dis';}).length;
+
+/* ====== ESTADO ====== */
+var CHAVE=KIT+'_simulado_v1'; var mem={}; var estado=carregar();
+function carregar(){ try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s);}catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); } return {resp:{},enviado:false}; }
+function salvar(){ var s=JSON.stringify(estado); try{ localStorage.setItem(CHAVE,s);}catch(e){ mem[CHAVE]=s; } var d=new Date(); document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR'); }
+var LETRAS='ABCDEFGHJKLMNPQRSTUVWXYZ';
+function gerarCodigo(ac){ var xx=(ac<10?'0':'')+ac; var yy=LETRAS[Math.floor(Math.random()*LETRAS.length)]+LETRAS[Math.floor(Math.random()*LETRAS.length)]; return 'SIM-'+xx+'-'+yy; }
+function respondida(i){ var q=Q[i], r=estado.resp[i]; if(r===undefined||r===null||r==='') return false; if(q.tipo==='dis') return String(r).trim().length>=3; return true; }
+function acertou(i){ var q=Q[i], r=estado.resp[i]; if(q.tipo==='som') return parseInt(r,10)===q.soma; if(q.tipo==='dis') return null; var a=q.alts.filter(function(x){return x.id===r;})[0]; return !!(a&&a.ok); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+
+function render(){
+  var c=document.getElementById('questoes'); var h=''; var G=estado.gabarito;
+  Q.forEach(function(q,i){
+    var tipoTxt={mc:'Múltipla escolha',som:'Somatório',rom:'Números romanos',dis:'Discursiva'}[q.tipo];
+    h+='<div class="q" id="q'+i+'"><span class="tipo '+q.tipo+'">'+tipoTxt+'</span><div class="num">Questão '+(i+1)+' de '+Q.length+'</div><h3>'+q.p+'</h3>';
+    if(q.tipo==='som'||q.tipo==='rom'){
+      q.itens.forEach(function(it){ var lab=q.tipo==='som'? ('('+(it.v<10?'0':'')+it.v+') ') : (it.n+'. '); var cls='afirm'+(G?(it.ok?' ok':' no'):''); h+='<div class="'+cls+'">'+lab+it.t+(G?'<div class="exp show">'+(it.ok?'✅ ':'❌ ')+it.e+'</div>':'')+'</div>'; });
+    }
+    if(q.tipo==='som'){
+      var r=estado.resp[i]; var ok=G?acertou(i):null;
+      h+='<div class="soma" style="margin-top:10px">Soma: <input type="number" min="0" max="31" id="som'+i+'" value="'+(r!==undefined?esc(r):'')+'" '+(estado.enviado?'disabled':'')+' oninput="marcar('+i+',this.value)"><span class="lab">'+(G?(ok?'✅ Correto: '+q.soma:'❌ Você somou '+esc(r)+'; o certo é '+q.soma):'')+'</span></div>';
+    } else if(q.tipo==='dis'){
+      h+='<textarea id="dis'+i+'" '+(estado.enviado?'disabled':'')+' oninput="marcar('+i+',this.value)" placeholder="Escreva aqui com as suas palavras…">'+esc(estado.resp[i]||'')+'</textarea>';
+      h+='<div class="modelo'+(G?' show':'')+'">'+q.modelo+'</div>';
+    } else {
+      q.ordem.forEach(function(a,k){
+        var letra='abcd'[k]; var sel=estado.resp[i]===a.id; var cls='alt'+(sel?' sel':'');
+        if(G){ if(a.ok) cls+=' certa'; else if(sel) cls+=' marcada-errada'; else cls+=' errada'; }
+        h+='<label class="'+cls+'"><input type="radio" name="q'+i+'" value="'+a.id+'" '+(sel?'checked':'')+' '+(estado.enviado?'disabled':'')+' onchange="marcar('+i+',\''+a.id+'\')"> <b>'+letra+')</b> '+a.t+(G?'<div class="exp show">'+(a.ok?'✅ ':'❌ ')+a.e+'</div>':'')+'</label>';
+      });
+    }
+    h+='</div>';
+  });
+  c.innerHTML=h; atualizarBarra(); if(estado.enviado) mostrarEnviado();
+}
+function marcar(i,v){ if(estado.enviado) return; estado.resp[i]=v; salvar(); var q=document.getElementById('q'+i); if(Q[i].tipo==='mc'||Q[i].tipo==='rom'){ var labs=q.querySelectorAll('.alt'); for(var k=0;k<labs.length;k++){ labs[k].classList.toggle('sel', labs[k].querySelector('input').value===v); } } atualizarBarra(); }
+function atualizarBarra(){ var n=0; Q.forEach(function(q,i){ if(respondida(i)) n++; }); document.getElementById('barra').style.width=(n/Q.length*100)+'%'; var b=document.getElementById('btn-enviar'); if(!estado.enviado){ b.disabled=n<Q.length; b.textContent=n<Q.length?'📨 Enviar simulado ('+n+' de '+Q.length+' respondidas)':'📨 Enviar simulado'; } }
+function enviar(){
+  if(estado.enviado) return;
+  var n=0; Q.forEach(function(q,i){ if(respondida(i)) n++; }); if(n<Q.length) return;
+  var ac=0; Q.forEach(function(q,i){ if(acertou(i)===true) ac++; });
+  estado.acertos=ac; estado.objetivas=OBJ; estado.codigo=gerarCodigo(ac); estado.enviado=true; estado.concluido=true; estado.concluidoEm=new Date().toISOString();
+  salvar(); render(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function mostrarEnviado(){
+  var b=document.getElementById('btn-enviar'); b.disabled=true; b.textContent='✅ Simulado enviado — respostas travadas';
+  document.getElementById('codigo').classList.add('show'); document.getElementById('cod').textContent=estado.codigo;
+  document.getElementById('codtxt').textContent='Anote este código para os pais. Ele abre o gabarito comentado (a discursiva é corrigida com a resposta-modelo).';
+  document.getElementById('gab').classList.add('show'); document.getElementById('fim').style.display='block';
+}
+function abrirGab(){ var v=document.getElementById('gab-in').value.trim().toUpperCase(); var m=document.getElementById('gab-msg'); if(v===estado.codigo||v==='PAIS-77'){ estado.gabarito=true; salvar(); render(); m.innerHTML='<span style="color:#b6f0aa">Gabarito liberado: '+estado.acertos+' acertos de '+OBJ+' questões objetivas (+ 1 discursiva para corrigir).</span>'; } else { m.innerHTML='<span style="color:#ffb3bb">Código incorreto.</span>'; } }
+function exportar(){ var blob=new Blob([JSON.stringify(estado,null,2)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='simulado_horta-vertical.json'; a.click(); }
+function importar(ev){ var f=ev.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false);}catch(e){ mostrarModal('❌ Arquivo inválido.',false);} }; r.readAsText(f); }
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Apagar as respostas deste Simulado? (Se ele já foi enviado, o código e a conclusão são mantidos.)',true); }
+function mostrarModal(txt,confirmar){ document.getElementById('modal-txt').innerHTML=txt; document.getElementById('modal').classList.add('show'); document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none'; document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar&&acaoZerar){ if(!estado.enviado){ estado={resp:{},enviado:false}; salvar(); render(); } else { mostrarModal('O Simulado já foi enviado: as respostas ficam travadas. Para refazer do zero, use "Zerar o kit inteiro" no Início.',false); acaoZerar=null; return; } } acaoZerar=null; fecharModal(); }; }
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+if(checarTrava()){ render(); }
+</script>
+</body>
+</html>

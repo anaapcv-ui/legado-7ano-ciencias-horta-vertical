@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitura Guiada · Horta Vertical · Ciências 7º</title>
+<style>
+  :root{
+    --fundo:#150f18; --fundo2:#1f1724; --borda:#33263a; --borda2:#4a3756;
+    --verde:#7be36b; --magenta:#e05cff; --laranja:#ff8f3a; --limao:#f4e04d;
+    --vermelho:#ff5d6c; --texto:#f2ecf4; --cinza:#a596ab; --postit:#ffe88a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Trebuchet MS',Verdana,'Segoe UI',sans-serif;background:
+    radial-gradient(900px 420px at 50% -8%,#2d1f36,#150f18 62%),var(--fundo);
+    color:var(--texto);line-height:1.65;padding-bottom:60px;font-size:17px}
+  header{background:linear-gradient(120deg,#16301a,#1d3a1f 50%,#2a1f33);padding:26px 18px;text-align:center;
+    box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--verde)}
+  header .selo{font-size:.76rem;letter-spacing:2px;color:#cdf3c6;text-transform:uppercase}
+  header h1{font-size:1.5rem;margin:6px 0 2px}
+  header p{color:#e2d9e6;font-size:.92rem}
+  .wrap{max-width:820px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--fundo2);color:var(--texto);text-decoration:none;padding:7px 12px;
+    border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:var(--verde);color:#0d2a09;font-weight:bold}
+  .barra-nav a.lock{opacity:.5}
+  .intro{background:var(--fundo2);border:1px solid var(--borda);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:var(--verde);font-size:1.1rem;margin-bottom:8px}
+  .intro ol{margin:8px 0 0 20px}
+  .legenda{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:.8rem}
+  .legenda span{padding:3px 10px;border-radius:12px;font-weight:bold}
+  .lg-ene{background:#3d2410;color:var(--laranja)} .lg-mac{background:#1c3a17;color:var(--verde)} .lg-mic{background:#3a1842;color:var(--magenta)} .lg-sau{background:#3a3610;color:var(--limao)}
+  .torre{display:flex;flex-direction:column-reverse;gap:4px;margin:12px auto 0;max-width:260px}
+  .torre div{font-size:.72rem;text-align:center;border-radius:6px;padding:2px 6px;background:#241a2b;border:1px solid var(--borda2);color:var(--cinza)}
+  .torre div.ok{background:#1c3a17;color:var(--verde);border-color:var(--verde)}
+  .torre div.atual{background:#3a1842;color:#f5c9ff;border-color:var(--magenta)}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+    background:var(--fundo2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--fundo);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .mini:hover{background:#2a1f30}
+  .bloco{background:var(--fundo2);border:1px solid var(--borda);border-radius:16px;margin-bottom:18px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.35)}
+  .bloco.travado{opacity:.55}
+  .bloco-cab{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(90deg,#261c2d,#2d2135);border-bottom:1px solid var(--borda)}
+  .bloco-cab .num{background:var(--laranja);color:#2a1400;font-weight:bold;width:36px;height:36px;border-radius:50% 50% 50% 6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .bloco.mac .bloco-cab .num{background:var(--verde);color:#0d2a09}
+  .bloco.mic .bloco-cab .num{background:var(--magenta);color:#2a0633}
+  .bloco.sau .bloco-cab .num{background:var(--limao);color:#2e2a00}
+  .bloco-cab h3{font-size:1.06rem;color:#fff}
+  .bloco-cab .porto{font-size:.7rem;color:var(--cinza);letter-spacing:1px;text-transform:uppercase}
+  .bloco-corpo{padding:16px}
+  .texto p{margin-bottom:10px}
+  .texto ul{margin:0 0 10px 20px}
+  .texto li{margin-bottom:6px}
+  .texto .destaque{color:var(--laranja);font-weight:bold}
+  .bloco.mac .texto .destaque{color:var(--verde)}
+  .bloco.mic .texto .destaque{color:var(--magenta)}
+  .bloco.sau .texto .destaque{color:var(--limao)}
+  .olhar{background:#2a2412;border-left:3px solid var(--postit);padding:8px 12px;margin:0 0 10px;border-radius:0 8px 8px 0;font-size:.93rem}
+  .olhar b{color:var(--postit)}
+  .cadeado{padding:22px 16px;text-align:center;color:var(--cinza);font-size:.9rem}
+  .perg{background:#1a131e;border:1px solid var(--borda);border-radius:12px;padding:12px;margin-top:14px}
+  .perg.red{border-color:var(--vermelho);box-shadow:0 0 0 1px var(--vermelho)}
+  .perg .tag{display:inline-block;font-size:.66rem;text-transform:uppercase;letter-spacing:1px;padding:2px 8px;border-radius:10px;margin-bottom:6px}
+  .tag.conc{background:#3a1842;color:#f0c2fa}
+  .tag.apl{background:#1c3a17;color:#c6f2bc}
+  .perg label{display:block;font-weight:600;margin-bottom:8px}
+  .perg textarea{width:100%;min-height:72px;background:#120d15;color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:9px;font-family:inherit;font-size:.97rem;resize:vertical}
+  .aviso{margin-top:8px;padding:9px 11px;border-radius:8px;font-size:.87rem;display:none}
+  .aviso.amarelo{display:block;background:#4a3d12;border:1px solid var(--limao);color:#fff1ad}
+  .aviso.vermelho{display:block;background:#4a1720;border:1px solid var(--vermelho);color:#ffc9cf}
+  .modelo{margin-top:10px;padding:10px 12px;background:#15301a;border:1px solid var(--verde);border-radius:8px;font-size:.92rem;display:none}
+  .modelo.show{display:block}
+  .modelo .lab{color:#b6f0aa;font-weight:bold;font-size:.78rem;text-transform:uppercase;letter-spacing:1px}
+  .chk{margin-top:10px;font-size:.9rem}
+  .chk .item{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
+  .chk .item span{flex:1;min-width:180px}
+  .chk .simnao button{border:1px solid var(--borda2);background:#120d15;color:var(--texto);border-radius:6px;padding:4px 10px;margin-left:4px;font-size:.8rem}
+  .chk .simnao button.sim.ativo{background:var(--verde);border-color:var(--verde);color:#0d2a09}
+  .chk .simnao button.nao.ativo{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+  .conferir{margin-top:14px;background:var(--verde);color:#0d2a09;border:none;border-radius:10px;padding:11px 18px;font-size:1rem;font-weight:bold;width:100%}
+  .conferir:disabled{background:#2a2230;color:#7d6f83;cursor:not-allowed}
+  .status-bloco{margin-top:10px;text-align:center;font-weight:bold;font-size:.95rem}
+  .prox{margin-top:12px;text-align:center}
+  .prox a{color:var(--verde);text-decoration:none;font-weight:bold}
+  .peg{background:#3a1420;border:2px solid var(--vermelho);border-radius:16px;padding:16px;margin-top:20px}
+  .peg h3{color:#ffb3bb;margin-bottom:10px}
+  .peg ol{margin-left:20px}
+  .peg li{margin-bottom:7px}
+  .cobertura{background:var(--fundo2);border:1px solid var(--borda);border-radius:16px;padding:16px;margin-top:18px}
+  .cobertura h3{color:var(--verde);margin-bottom:10px}
+  table{width:100%;border-collapse:collapse;font-size:.86rem}
+  th,td{border:1px solid var(--borda);padding:7px 9px;text-align:left}
+  th{background:#261c2d}
+  .revisar{background:#3a2e06;border:2px solid var(--limao);border-radius:16px;padding:16px;margin-top:18px}
+  .revisar h3{color:var(--limao);margin-bottom:8px}
+  .revisar ul{margin-left:18px}
+  .relatorio{background:var(--fundo2);border:1px dashed var(--verde);border-radius:14px;padding:16px;margin-top:18px;font-size:.9rem}
+  .relatorio h3{color:var(--verde);margin-bottom:8px}
+  .trilha-fim{background:linear-gradient(120deg,#16301a,#1d3a1f);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .trilha-fim h3{color:#b6f0aa;margin-bottom:8px}
+  .trilha-fim a.btn{display:inline-block;margin-top:8px;background:var(--verde);color:#0d2a09;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .trilha-fim a.btn.off{background:#2a2230;color:#7d6f83;pointer-events:none}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--fundo2);border:1px solid var(--verde);border-radius:14px;padding:20px;max-width:420px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal button{background:var(--verde);color:#0d2a09;border:none;border-radius:8px;padding:9px 16px;font-weight:bold}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Horta Vertical · Ciências 7º ano · Colégio Legado</div>
+  <h1>📖 Leitura Guiada — Subindo a Torre</h1>
+  <p>Capítulo 9 · Alimentando o corpo e a mente · Prova 22/10 · Bernoulli Livro 4</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a class="on" href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html" data-etapa="quiz">🎯 Quiz</a>
+    <a href="resumo.html" data-etapa="resumo">🗺️ Resumo</a>
+    <a href="simulado.html" data-etapa="simulado">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="intro">
+    <h2>🌱 Bem-vindo(a) à Horta Vertical</h2>
+    <p>Esta é uma torre de cultivo que funciona à noite, com luz de estufa. Cada <b>andar</b> cultiva um grupo de nutrientes do Capítulo 9. São <b>11 andares</b>, e o elevador só sobe para o próximo quando você <b>conferir</b> o andar em que está.</p>
+    <ol>
+      <li>Leia o andar com calma (tudo aqui vem do seu livro).</li>
+      <li>Responda as 3 perguntas <b>escrevendo</b> com as suas palavras (não vale copiar o texto).</li>
+      <li>Clique em <b>Conferir</b>: aparece a resposta-modelo e uma autoavaliação Sim/Não.</li>
+      <li>Com os 11 andares conferidos e a autoavaliação respondida, o <b>🎯 Quiz destrava</b>.</li>
+    </ol>
+    <div class="legenda"><span class="lg-ene">⚡ Energia e rótulos</span><span class="lg-mac">🌾 Macronutrientes</span><span class="lg-mic">🍊 Micronutrientes</span><span class="lg-sau">💛 Saúde</span></div>
+    <div class="torre" id="torre"></div>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div id="blocos"></div>
+
+  <div class="peg">
+    <h3>⚠️ 10 Pegadinhas da Prova (não caia nelas!)</h3>
+    <ol>
+      <li><b>Simples × complexo:</b> carboidrato <b>simples</b> é digerido e absorvido <b>rápido</b> (energia rápida, indicado a atletas antes do exercício). O <b>complexo</b> (amido) tem cadeias longas e <b>demora</b> para virar glicose.</li>
+      <li><b>Mono, di ou poli?</b> Glicose, frutose e galactose = <b>monossacarídeos</b>. Sacarose, lactose e maltose = <b>dissacarídeos</b>. Amido e celulose = <b>polissacarídeos</b>. Lactose NÃO é monossacarídeo!</li>
+      <li><b>Fibra não dá energia, mas é importante:</b> não é digerida nem absorvida, mas ajuda o intestino (bolo alimentar e fezes) e <b>reduz a absorção de colesterol</b>. Mínimo de <b>25 g por dia</b> para um adulto.</li>
+      <li><b>Índice glicêmico:</b> <b>alto</b> = sobe a glicemia rápido (pão, batata, macarrão → atletas). <b>Baixo</b> = algumas frutas, leite e leguminosas (→ quem controla o peso e pessoas com diabetes).</li>
+      <li><b>Aminoácido essencial</b> é o que o corpo <b>NÃO</b> fabrica: tem que vir da comida. O <b>não essencial</b> o corpo produz sozinho. Parece invertido — cuidado!</li>
+      <li><b>Enzimas são proteínas</b> e servem para <b>acelerar</b> as reações químicas. Sem elas, as reações seriam lentíssimas ou nem aconteceriam.</li>
+      <li><b>Lipídio é fonte SECUNDÁRIA de energia</b> e é <b>hidrofóbico</b> (não se dissolve em água). A gordura <b>saturada</b> é firme e, em excesso, aumenta o <b>LDL</b> → aterosclerose. <b>Óleos</b> = gorduras <b>insaturadas</b>, mais líquidas.</li>
+      <li><b>Vitamina D vem principalmente do SOL</b> (raios UVB na pele), e não da alimentação.</li>
+      <li><b>Não troque as doenças:</b> escorbuto = falta de vitamina <b>C</b> · raquitismo e osteomalácia = falta de vitamina <b>D</b> · beribéri = <b>B1</b> · espinha bífida = <b>B9</b> · anemia = <b>ferro</b> · bócio = <b>iodo</b> · cáries = <b>flúor</b>.</li>
+      <li><b>1 kcal = 1 000 calorias</b>. E falta de <b>sódio</b> causa pressão arterial <b>baixa</b> (não alta), desidratação e câibras.</li>
+    </ol>
+  </div>
+
+  <div class="cobertura">
+    <h3>🧭 Cobertura: Tópico → Andar</h3>
+    <table>
+      <thead><tr><th>Tópico da prova</th><th>Páginas (Bernoulli L4)</th><th>Andar</th></tr></thead>
+      <tbody>
+        <tr><td>Funções energética, estrutural e reguladora; papel social da alimentação (comensalidade)</td><td>9</td><td>1</td></tr>
+        <tr><td>Tabela nutricional (%VD), informações do rótulo, grau de processamento, lupa "ALTO EM" (2022)</td><td>12–13</td><td>2</td></tr>
+        <tr><td>Calorias (cal, kcal), metabolismo basal, energia extra e nutricionista</td><td>13</td><td>3</td></tr>
+        <tr><td>Macronutrientes; carboidratos simples e complexos; glicemia; índice glicêmico</td><td>19–20</td><td>4</td></tr>
+        <tr><td>Fibras; tabela TBCA (Exercício 09)</td><td>20, 22</td><td>5</td></tr>
+        <tr><td>Proteínas, digestão em aminoácidos, fontes, essenciais × não essenciais, enzimas (Exerc. 10 e 11)</td><td>22–24</td><td>6</td></tr>
+        <tr><td>Lipídios: tecido adiposo, saturadas, cerídeos, óleos, lipídios complexos (Exerc. 12 e 13)</td><td>24–25</td><td>7</td></tr>
+        <tr><td>Micronutrientes; hipo/avit/hipervitaminose; vitamina A e complexo B</td><td>25–26</td><td>8</td></tr>
+        <tr><td>Vitaminas C, D, E e K; escorbuto e as Grandes Navegações ("Tudo conectado")</td><td>27–28</td><td>9</td></tr>
+        <tr><td>Sais minerais: cálcio, ferro, flúor, fósforo, iodo, potássio e sódio</td><td>28–29</td><td>10</td></tr>
+        <tr><td>Doenças associadas à obesidade; condição multifatorial; disfunções alimentares (Exerc. 16)</td><td>34–35</td><td>11</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="revisar" id="revisar" style="display:none">
+    <h3>🔁 Para revisar antes da prova</h3>
+    <ul id="revisar-lista"></ul>
+  </div>
+
+  <div class="relatorio">
+    <h3>📊 Para os pais (resumo desta leitura)</h3>
+    <div id="rel-conteudo">Assim que o aprendiz for conferindo os andares, o resumo aparece aqui.</div>
+  </div>
+
+  <div class="trilha-fim" id="trilha-fim">
+    <h3>🔒 Próxima etapa: Quiz</h3>
+    <p id="trilha-fim-txt">O Quiz destrava quando os 11 andares estiverem conferidos e a autoavaliação respondida.</p>
+    <a class="btn off" id="btn-prox" href="quiz.html">🎯 Ir para o Quiz</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🌱🥕🍊 Boa prova!</div>
+</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='horta_vertical';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function marcarNav(){
+  var links=document.querySelectorAll('#nav a[data-etapa]');
+  for(var i=0;i<links.length;i++){ var id=links[i].getAttribute('data-etapa'); if(!podeAbrir(id)){ links[i].classList.add('lock'); links[i].textContent='🔒 '+links[i].textContent.replace('🔒 ',''); links[i].setAttribute('title','Ainda trancado'); } else { links[i].classList.remove('lock'); links[i].textContent=links[i].textContent.replace('🔒 ',''); } }
+}
+
+/* ====== ANDARES (conteúdo do livro Bernoulli Ciências L4 — Cap. 9, pp. 9-35 do escopo) ====== */
+var BLOCOS = [
+ {
+  porto:"Andar 1 · Energia e funções", emoji:"🍽️", u:"ene",
+  titulo:"Para que serve comer? As três funções dos nutrientes",
+  texto:[
+   "Tudo o que você come vira trabalho para o corpo. O livro separa os nutrientes em <b>três funções</b>. A primeira é a <span class='destaque'>função energética</span>: pão, batata e macarrão têm muito <b>carboidrato</b>, que na digestão vira <b>glicose</b>; carnes, leite e derivados e os grãos oleaginosos trazem os <b>lipídios</b> (gorduras). As células usam esses nutrientes para conseguir <b>energia</b> — e você gasta energia o dia todo, mais ou menos conforme a tarefa.",
+   "A segunda é a <span class='destaque'>função estrutural</span>. Para formar e fortalecer <b>músculos e ossos</b>, o corpo precisa dos <b>alimentos construtores</b>, ricos em <b>proteínas</b>: carnes, ovos, leite e derivados e as leguminosas (feijão, soja, ervilha). Serve para qualquer atleta: o levantador de peso quer músculos fortes; o maratonista, músculos resistentes — os dois dependem de proteína.",
+   "A terceira é a <span class='destaque'>função reguladora</span>. O corpo se mantém graças a um conjunto de reações chamado <b>metabolismo</b>. Para essas reações acontecerem em equilíbrio, precisamos de <b>vitaminas e sais minerais</b>, que vêm de frutas, legumes, verduras e cereais.",
+   "<div class='olhar'><b>Comer também é social:</b> a alimentação ajudou nossos antepassados a sobreviver e criou identidades culturais por meio da <b>comensalidade</b> — o hábito de dividir a comida, típico da nossa espécie (lembre da imagem dos hominídeos reunidos em volta da fogueira).</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Quais são as três funções dos nutrientes e que tipo de nutriente cuida de cada uma?",modelo:"Energética: carboidratos e lipídios fornecem energia. Estrutural: proteínas constroem músculos e ossos. Reguladora: vitaminas e sais minerais ajudam a regular o metabolismo.",chk:["Citei as três funções (energética, estrutural e reguladora)?","Liguei cada função ao nutriente certo?"]},
+   {tag:"apl",q:"Um prato tem arroz, feijão, bife e salada de alface com tomate. Diga qual alimento do prato representa cada uma das três funções.",modelo:"Energética: o arroz (carboidrato). Estrutural: o bife e o feijão (proteínas — carne e leguminosa). Reguladora: a alface e o tomate (verduras e legumes, com vitaminas e sais minerais).",chk:["Coloquei o arroz como energético?","Coloquei o bife e/ou o feijão como estrutural (proteína)?","Coloquei a salada como reguladora?"]},
+   {tag:"apl",q:"Um aplicativo promete trocar todas as refeições por pílulas com todos os nutrientes. Além dos nutrientes, o que a pessoa perderia? Use a ideia de comensalidade.",modelo:"Ela perderia o lado social da comida: a comensalidade, o hábito de dividir a refeição com a família e os amigos, que faz parte da nossa espécie e ajudou a construir a cultura e a identidade dos povos.",chk:["Usei a ideia de comensalidade (partilhar a comida)?","Falei do lado social ou cultural da alimentação?"]}
+  ]
+ },
+ {
+  porto:"Andar 2 · Energia e rótulos", emoji:"🏷️", u:"ene",
+  titulo:"Lendo o rótulo e o grau de processamento",
+  texto:[
+   "A embalagem conta muita coisa. Na <span class='destaque'>tabela nutricional</span>, a linha <b>valor energético</b> mostra a energia de cada porção, e as outras linhas mostram os <b>nutrientes</b> da porção (carboidratos, proteínas, gorduras, fibras, sódio…). A coluna <b>%VD</b> indica quanto aquela porção representa do que um adulto precisa no dia: no pão de queijo do livro, a porção de 50 g já dá <b>15% de toda a gordura</b> diária.",
+   "O rótulo também pode avisar se há <b>transgênicos</b>, <b>gordura adicionada</b> ou <b>substâncias sintéticas</b>. E, desde <b>2022</b>, alimentos industrializados com muito <b>açúcar adicionado, sódio ou gordura saturada</b> levam na frente uma <span class='destaque'>lupa \"ALTO EM\"</span>, um símbolo que alerta o consumidor de forma clara e rápida.",
+   "Os alimentos também são classificados pelo <span class='destaque'>grau de processamento</span>:",
+   "<ul><li><b>In natura</b> — do jeito que vêm da natureza, de origem animal ou vegetal (frutas, verduras).</li><li><b>Minimamente processados</b> — só passaram por moagem, secagem, pasteurização etc. (frutas desidratadas, castanhas e nozes, leite, suco de fruta).</li><li><b>Processados</b> — receberam sal, açúcar, óleo ou conservantes para ficarem mais gostosos e durarem mais (pão, sardinha e atum enlatados, carne defumada, compota de frutas).</li><li><b>Ultraprocessados</b> — fórmulas feitas quase só de substâncias tiradas de alimentos e de aditivos, com pouco ou nada in natura (biscoito recheado, salgadinho, refrigerante, achocolatado).</li></ul>",
+   "Comer <b>in natura</b> com regularidade combina com uma dieta balanceada. Já os <b>ultraprocessados</b>, práticos para quem tem pressa, podem trazer <b>sérios riscos à saúde quando consumidos em excesso</b>."
+  ],
+  perguntas:[
+   {tag:"apl",q:"Classifique pelo grau de processamento: banana, castanha-de-caju, atum em lata e refrigerante. Depois explique a classificação de um deles.",modelo:"Banana: in natura. Castanha: minimamente processada. Atum em lata: processado. Refrigerante: ultraprocessado — é uma fórmula de substâncias e aditivos, quase sem alimento in natura.",chk:["Acertei as quatro classificações?","Expliquei pelo menos uma delas?"]},
+   {tag:"apl",q:"Um pacote de biscoito tem na frente a lupa 'ALTO EM açúcar adicionado'. Explique para uma criança mais nova o que esse símbolo quer dizer e por que ele existe.",modelo:"Quer dizer que o biscoito tem muito açúcar colocado na fabricação. A lupa é uma regra de 2022 para avisar quem compra, de um jeito fácil, que o produto tem grande quantidade dessa substância.",chk:["Disse que o produto tem muito açúcar adicionado?","Disse que a lupa serve para alertar o consumidor (regra de 2022)?"]},
+   {tag:"conc",q:"Na tabela do pão de queijo, a gordura total aparece com 15% no %VD. O que esse número significa?",modelo:"Que comer aquela porção (50 g) já fornece 15% de toda a gordura que um adulto precisa no dia inteiro.",chk:["Falei da porção (50 g)?","Expliquei que é a parte (15%) do que um adulto precisa por dia?"]}
+  ]
+ },
+ {
+  porto:"Andar 3 · Energia e rótulos", emoji:"🔥", u:"ene",
+  titulo:"Calorias e metabolismo basal",
+  texto:[
+   "Caloria é palavra de rótulo, mas o que ela mede? As <span class='destaque'>calorias</span> (em <b>kcal</b> ou <b>kJ</b>) indicam a <b>energia</b> que o alimento entrega ao corpo depois de ser comido, digerido e absorvido por completo.",
+   "A medida vem da água: <b>1 caloria</b> é a energia que esquenta <b>1 mL de água em 1 °C</b>. Para levar 1 mL de água de 25 °C a 30 °C (5 graus a mais), gastam-se <b>5 calorias</b>. No dia a dia usamos a <span class='destaque'>kcal</span>: <b>1 kcal = 1 000 calorias</b>, a energia para esquentar <b>1 litro</b> (1 000 mL) de água em 1 °C.",
+   "O corpo gasta energia para andar, respirar, digerir e, principalmente, para manter a temperatura perto de <b>36,5 °C</b>. Mesmo parado ele gasta: esse mínimo para continuar funcionando em repouso é o <span class='destaque'>metabolismo basal</span>. Costuma-se dizer que um adulto precisa de cerca de <b>1 400 kcal por dia</b> só para isso, mas o valor muda com <b>sexo, idade, massa corporal e composição do corpo</b>. Uma pessoa de 70 kg gasta, no total, entre 2 000 e 3 000 kcal por dia, conforme a atividade física.",
+   "Quem come mais kcal do que precisa guarda a sobra principalmente como <b>gordura</b>. Por isso controlar as calorias importa para todos, e quem precisa perder ou ganhar peso por motivo de saúde deve ter acompanhamento de um <span class='destaque'>nutricionista</span>."
+  ],
+  perguntas:[
+   {tag:"conc",q:"O que é metabolismo basal?",modelo:"É a menor quantidade de energia de que o corpo precisa para continuar funcionando em repouso (manter a temperatura, respirar...). Ele varia com sexo, idade, massa corporal e composição corporal.",chk:["Disse que é a energia mínima para o corpo em repouso?","Citei que ele varia (sexo, idade, massa ou composição)?"]},
+   {tag:"apl",q:"Quantas calorias são necessárias para aquecer 1 mL de água de 20 °C para 28 °C? E quantas kcal para aquecer 1 litro de água em 3 °C? Mostre o raciocínio.",modelo:"De 20 para 28 °C são 8 graus; como 1 caloria esquenta 1 mL em 1 °C, são 8 calorias. 1 kcal esquenta 1 litro em 1 °C, então 1 litro em 3 °C precisa de 3 kcal.",chk:["Cheguei a 8 calorias?","Cheguei a 3 kcal?"]},
+   {tag:"apl",q:"Nas férias, um adolescente passou a comer muito mais do que gastava. Explique o que acontece com a energia que sobra e quem poderia ajudá-lo se ele precisasse controlar o peso por saúde.",modelo:"A energia que sobra fica guardada no corpo, principalmente em forma de gordura. Para controlar o peso por motivo de saúde, ele deveria ter acompanhamento de um nutricionista.",chk:["Disse que a sobra vira gordura?","Citei o nutricionista?"]}
+  ]
+ },
+ {
+  porto:"Andar 4 · Macronutrientes", emoji:"🍞", u:"mac",
+  titulo:"Carboidratos: energia rápida e energia lenta",
+  texto:[
+   "Os <span class='destaque'>macronutrientes</span> — <b>carboidratos, proteínas e gorduras</b> — são os que precisamos comer <b>em maior quantidade</b>. As moléculas deles são enormes: o corpo as digere <b>em partes</b>, absorve no <b>intestino</b>, e o sangue leva até as células.",
+   "Os <span class='destaque'>carboidratos</span> estão em frutas, pães, bolos e massas e são classificados pelo tamanho da molécula. Os <b>simples</b> se dividem em <b>monossacarídeos</b> (1 molécula de açúcar: <b>glicose</b>, das plantas e do mel; <b>frutose</b>, das frutas; <b>galactose</b>, do leite) e <b>dissacarídeos</b> (2 moléculas: <b>sacarose</b>, o açúcar de mesa; <b>lactose</b>, dos laticínios; <b>maltose</b>, de alguns vegetais). Eles são digeridos e absorvidos <b>rápido</b> — por isso profissionais da saúde esportiva os indicam a atletas antes (e às vezes durante) o exercício.",
+   "Os <b>complexos</b> são os <span class='destaque'>polissacarídeos</span>: centenas de monossacarídeos ligados. Os principais são o <b>amido</b> (papel energético) e a <b>celulose</b> (estrutura dos vegetais — as fibras). Como as cadeias são longas, a digestão até chegar à glicose é mais <b>complexa e demorada</b>.",
+   "Comer carboidrato aumenta a <span class='destaque'>glicemia</span> (a quantidade de glicose no sangue); esse aumento se chama <b>hiperglicemia</b>. Depois as células gastam a glicose e ela vai caindo até a próxima refeição. Alimentos que sobem a glicemia rapidamente têm <b>alto índice glicêmico</b> (pão, batata, macarrão — bons para atletas); os de <b>baixo índice glicêmico</b> (algumas frutas, leite, leguminosas) são indicados para quem quer controlar o peso e para pessoas com <b>diabetes</b>."
+  ],
+  perguntas:[
+   {tag:"apl",q:"Classifique como monossacarídeo, dissacarídeo ou polissacarídeo: lactose, amido, frutose e sacarose.",modelo:"Lactose: dissacarídeo. Amido: polissacarídeo. Frutose: monossacarídeo. Sacarose: dissacarídeo.",chk:["Classifiquei lactose e sacarose como dissacarídeos?","Classifiquei frutose como monossacarídeo e amido como polissacarídeo?"]},
+   {tag:"apl",q:"Um corredor vai largar numa prova daqui a pouco. Ele deve comer um carboidrato simples ou complexo? Por quê?",modelo:"Simples, porque é digerido e absorvido rapidamente e logo vira energia. O complexo tem cadeias longas e demora mais para virar glicose.",chk:["Escolhi o carboidrato simples?","Expliquei que ele é digerido/absorvido rápido?"]},
+   {tag:"conc",q:"O que é glicemia e o que acontece com ela depois de uma refeição com carboidratos?",modelo:"Glicemia é a quantidade de glicose no sangue. Depois da refeição ela sobe (hiperglicemia) e vai caindo à medida que as células usam a glicose, até a próxima refeição.",chk:["Defini glicemia como glicose no sangue?","Disse que ela sobe e depois vai caindo?"]}
+  ]
+ },
+ {
+  porto:"Andar 5 · Macronutrientes", emoji:"🌾", u:"mac",
+  titulo:"Fibras e o controle da glicemia",
+  texto:[
+   "As <span class='destaque'>fibras</span> são polissacarídeos de origem vegetal arrumados em filamentos. Elas <b>não têm importância calórica</b> (quase não dão energia), mas são muito recomendadas. A principal é a <b>celulose</b>; também existem a <b>hemicelulose</b> e a <b>pectina</b>.",
+   "Onde achar: alimentos <b>integrais</b>, verduras, grãos, sementes, cereais e frutas — principalmente quando comidas <b>com a casca</b>. O corpo humano <b>não digere nem absorve</b> as fibras. Mesmo assim elas trabalham: ajudam a formar e a empurrar o <b>bolo alimentar e as fezes</b> pelo intestino grosso e <b>reduzem a absorção de colesterol</b>. Um adulto precisa de, no mínimo, <b>25 g de fibras por dia</b>.",
+   "<div class='olhar'><b>Tabela do livro (TBCA):</b> arroz branco — simples, 0,4 g de fibras, IG alto (73) · batata-doce — complexo, 3,0 g, IG médio (46) · aveia — complexo, 10,6 g, IG baixo (55) · mel — simples, 0,2 g, IG alto (60-70) · feijão preto — complexo, 7,5 g, IG baixo (30) · banana — simples, 2,6 g, IG médio (51).</div>",
+   "Repare no padrão da tabela: os alimentos de <b>IG baixo</b> são carboidratos <b>complexos</b> e com <b>bastante fibra</b>; os de <b>IG alto</b> são <b>simples</b> e quase sem fibra."
+  ],
+  perguntas:[
+   {tag:"apl",q:"Pela tabela, quais dois alimentos você indicaria para quem quer controlar a glicemia nas refeições? Justifique com os dados.",modelo:"Feijão preto e aveia: os dois têm índice glicêmico baixo (30 e 55), são carboidratos complexos e têm bastante fibra (7,5 g e 10,6 g).",chk:["Escolhi feijão preto e aveia?","Justifiquei com o IG baixo (e/ou as fibras ou o tipo complexo)?"]},
+   {tag:"conc",q:"Se as fibras não são digeridas nem absorvidas, por que vale a pena comê-las?",modelo:"Porque ajudam a formar e a movimentar o bolo alimentar e as fezes no intestino grosso e diminuem a absorção de colesterol.",chk:["Citei a ajuda no intestino (bolo alimentar/fezes)?","Citei a redução da absorção de colesterol?"]},
+   {tag:"apl",q:"Dê duas dicas práticas, tiradas do texto, para alguém comer mais fibras no dia a dia.",modelo:"Trocar pães e cereais comuns pelos integrais e comer as frutas com casca; também incluir verduras, grãos e sementes nas refeições.",chk:["Dei duas dicas?","As dicas combinam com o texto (integrais, casca, verduras, grãos, sementes)?"]}
+  ]
+ },
+ {
+  porto:"Andar 6 · Macronutrientes", emoji:"🥚", u:"mac",
+  titulo:"Proteínas: peças que viram músculo e enzimas",
+  texto:[
+   "As <span class='destaque'>proteínas</span> são os principais macronutrientes com <b>função estrutural</b>: estão em grande quantidade nos <b>músculos, ossos e pele</b>, dando sustentação.",
+   "Na digestão, a proteína é desmontada em pedaços menores, os <span class='destaque'>aminoácidos</span>. A quebra <b>começa no estômago</b> e continua no <b>intestino delgado</b>. No fim, os aminoácidos atravessam a <b>parede do intestino</b> e o sangue os leva para o corpo inteiro; dentro das células eles são montados de novo como <b>proteínas humanas</b>. O que não foi completamente digerido não é absorvido e sai nas <b>fezes</b>.",
+   "Fontes: carnes, ovos e leite e também as <b>leguminosas</b>, como feijão e soja. Graças a elas, quem segue dieta <b>vegetariana ou vegana</b> consegue trocar a carne e os produtos de origem animal por outros alimentos ricos em proteína, de forma saudável.",
+   "Para fazer a <b>síntese</b> (a produção) das proteínas, o corpo usa dois tipos de aminoácidos: os <span class='destaque'>não essenciais</span>, que ele <b>fabrica sozinho</b>, e os <span class='destaque'>essenciais</span>, que <b>só vêm da alimentação</b>. Se faltam os essenciais, o corpo não consegue fazer proteínas indispensáveis, como as <span class='destaque'>enzimas</span> — proteínas que <b>aceleram as reações químicas</b>. Sem enzimas, a digestão e a produção de energia seriam lentíssimas ou nem aconteceriam."
+  ],
+  perguntas:[
+   {tag:"apl",q:"Num sanduíche com pão, manteiga, presunto magro, queijo, ovo, alface e tomate, quais ingredientes são ricos em proteína? E para que a proteína serve?",modelo:"O presunto (carne), o queijo (derivado do leite) e o ovo. A proteína tem função estrutural: forma e mantém músculos, ossos e pele; e também forma as enzimas.",chk:["Citei presunto, queijo e ovo?","Expliquei a função estrutural (ou a das enzimas)?"]},
+   {tag:"apl",q:"Alguns atletas tomam suplemento de aminoácidos para ganhar massa muscular. Explique por que isso faz sentido.",modelo:"Porque os aminoácidos são as peças com que o corpo monta as proteínas, e o músculo é feito de proteína. Com mais peças disponíveis (principalmente as essenciais, que o corpo não fabrica), fica mais fácil formar músculo.",chk:["Disse que os aminoácidos formam proteínas?","Liguei a proteína ao músculo?"]},
+   {tag:"conc",q:"Qual a diferença entre aminoácido essencial e não essencial?",modelo:"O não essencial o corpo consegue produzir sozinho; o essencial precisa vir obrigatoriamente da alimentação.",chk:["Não essencial = o corpo produz?","Essencial = vem da alimentação?"]}
+  ]
+ },
+ {
+  porto:"Andar 7 · Macronutrientes", emoji:"🥑", u:"mac",
+  titulo:"Lipídios: vilões ou necessários?",
+  texto:[
+   "Muita gente acha que os <span class='destaque'>lipídios</span> (gorduras) são os vilões da comida, porque o exagero está ligado à obesidade e a problemas no sistema cardiovascular. Mas comer a quantidade <b>adequada</b> é fundamental. Uma marca deles: são <b>hidrofóbicos</b> — não se dissolvem em água.",
+   "Eles são uma fonte <b>secundária</b> de energia. O que não é usado fica guardado nas células do <span class='destaque'>tecido adiposo</span>, em lugares como o abdome, as palmas das mãos e as plantas dos pés, onde também <b>amortecem impactos</b>.",
+   "Os <b>lipídios simples</b> são três:",
+   "<ul><li><b>Gorduras saturadas</b> — em carnes e derivados do leite; ficam <b>firmes</b> em temperatura ambiente; a indústria as fabrica a partir de óleos para deixar chocolates e biscoitos recheados mais macios. Em excesso aumentam o <b>LDL</b>, que leva colesterol do fígado para as células e tende a se acumular nas <b>artérias</b>, favorecendo a <b>aterosclerose</b> (placas que entopem as artérias).</li><li><b>Cerídeos</b> (ceras) — dão brilho a folhas e frutos e, como não se misturam com a água, ajudam a planta a <b>perder menos água</b>; a cera de abelha é usada em loções, pomadas e esmaltes.</li><li><b>Óleos</b> — são as gorduras <b>insaturadas</b>, mais <b>líquidas</b>; estão no abacate, nas nozes e na linhaça. Os óleos refinados (soja, girassol) passam por calor e tratamentos que podem tirar nutrientes, então pedem equilíbrio.</li></ul>",
+   "Os <b>lipídios complexos</b> vêm ligados a substâncias de outros grupos: os <b>fosfolipídios</b> (lipídio + fósforo) formam as <b>membranas plasmáticas</b> das células, e os <b>esteróis</b> ajudam a produzir <b>hormônios</b> e a absorver as <b>vitaminas lipossolúveis</b>."
+  ],
+  perguntas:[
+   {tag:"apl",q:"Entre gordura saturada e insaturada, qual está mais ligada a problemas de saúde? Cite os problemas que uma dieta rica nela pode causar.",modelo:"A saturada. Em excesso ela aumenta o LDL, que acumula colesterol nas artérias e pode levar à aterosclerose: placas que entopem as artérias e atrapalham a passagem do sangue.",chk:["Escolhi a gordura saturada?","Citei o LDL/colesterol nas artérias ou a aterosclerose?"]},
+   {tag:"apl",q:"Uma colega quer cortar TODA a gordura da dieta. Use o texto para mostrar por que isso não é uma boa ideia.",modelo:"Porque o consumo adequado de lipídios é fundamental: eles são reserva de energia, o tecido adiposo amortece impactos, os fosfolipídios formam as membranas das células e os esteróis ajudam a produzir hormônios e a absorver vitaminas.",chk:["Disse que o consumo adequado é necessário?","Dei pelo menos uma função dos lipídios?"]},
+   {tag:"conc",q:"O que são os cerídeos e qual a vantagem deles para as plantas?",modelo:"São ceras que cobrem folhas e frutos e os deixam brilhantes. Como não se misturam com a água, ajudam a planta a perder menos água.",chk:["Disse que são ceras que cobrem folhas/frutos?","Disse que diminuem a perda de água?"]}
+  ]
+ },
+ {
+  porto:"Andar 8 · Micronutrientes", emoji:"🥕", u:"mic",
+  titulo:"Vitaminas: A e as do complexo B",
+  texto:[
+   "Os <span class='destaque'>micronutrientes</span> — <b>vitaminas e sais minerais</b> — são necessários em <b>pequenas quantidades</b>, mas participam de muitas reações químicas do corpo. Aparecem mais nos alimentos <b>pouco processados</b>, de origem vegetal e animal.",
+   "As <span class='destaque'>vitaminas</span> têm função <b>reguladora</b>: junto com as <b>enzimas</b>, fazem as reações essenciais acontecerem direito. Quando a dose sai do ponto, há três quadros: <b>hipovitaminose</b> (consumo abaixo do recomendado), <b>avitaminose</b> (falta severa) e <b>hipervitaminose</b> (intoxicação por excesso). Os sintomas de cada falta ajudam a descobrir qual vitamina está faltando.",
+   "<b>Vitamina A (retinol):</b> em vegetais amarelados e alaranjados (cenoura, tomate, abóbora) e em ovos, óleo de fígado de bacalhau, leite e derivados. Cuida dos <b>olhos</b>, principalmente da <b>retina</b>, que capta a luz e forma as imagens; também participa da formação dos ossos, do <b>sistema imunológico</b> e da produção de <b>melanina</b>, o pigmento que dá cor à pele, ao cabelo e à íris.",
+   "<b>Complexo B:</b> em carnes, peixes, ovos, leite e derivados. Cada uma tem o seu papel:",
+   "<ul><li><b>B1 (tiamina)</b> — energia e tônus muscular. Falta: <b>beribéri</b>, fraqueza muscular, dificuldade para respirar.</li><li><b>B2 (riboflavina)</b> — energia e formação de células do sangue. Falta: fraqueza e cansaço.</li><li><b>B9 (ácido fólico)</b> — forma o sistema nervoso do embrião. Falta: anemia megaloblástica e <b>espinha bífida</b> em recém-nascidos.</li><li><b>B12 (cobalamina)</b> — produção de <b>glóbulos vermelhos</b>. Falta: poucos glóbulos vermelhos, fraqueza e cansaço.</li></ul>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Qual a diferença entre hipovitaminose, avitaminose e hipervitaminose?",modelo:"Hipovitaminose: consumo de vitamina abaixo do recomendado. Avitaminose: falta severa da vitamina. Hipervitaminose: intoxicação por consumo exagerado.",chk:["Diferenciei hipovitaminose (pouco) de avitaminose (falta severa)?","Expliquei hipervitaminose como excesso/intoxicação?"]},
+   {tag:"apl",q:"Uma família quer reforçar a saúde dos olhos e o sistema imunológico das crianças. Qual vitamina o texto liga a isso e que alimentos você colocaria no cardápio?",modelo:"A vitamina A (retinol). No cardápio: cenoura, tomate, abóbora, ovos, leite e derivados.",chk:["Escolhi a vitamina A?","Citei pelo menos duas fontes do texto?"]},
+   {tag:"apl",q:"Por que é importante que uma gestante tenha vitamina B9 (ácido fólico) suficiente? Use a tabela do complexo B.",modelo:"Porque a B9 ajuda a formar o sistema nervoso do bebê durante o desenvolvimento embrionário; a falta pode causar espinha bífida no recém-nascido (e anemia megaloblástica).",chk:["Liguei a B9 à formação do sistema nervoso do embrião?","Citei a espinha bífida (ou a anemia megaloblástica)?"]}
+  ]
+ },
+ {
+  porto:"Andar 9 · Micronutrientes", emoji:"🍊", u:"mic",
+  titulo:"Vitaminas C, D, E e K",
+  texto:[
+   "<b>Vitamina C:</b> nas frutas cítricas (acerola, laranja, limão). Ajuda a produzir o <span class='destaque'>colágeno</span>, a proteína que mantém em forma as gengivas, os ossos e os vasos sanguíneos. A falta causa o <b>escorbuto</b>: gengivas sangrando, perda de massa nos ossos, dentes frouxos que podem cair.",
+   "<div class='olhar'><b>Tudo conectado:</b> nas Grandes Navegações, marinheiros passavam meses no mar e ficavam fracos, com gengivas sangrando e dores nas articulações; muitos achavam que a causa era sobrenatural. O médico escocês <b>James Lind</b> fez experimentos com esses marinheiros e mostrou que era <b>escorbuto</b>, causado pela <b>falta de vitamina C</b>: quando eles passaram a comer limões e laranjas, os sintomas diminuíram.</div>",
+   "<b>Vitamina D:</b> a maior fonte <b>não é a comida</b>, e sim a <b>pele exposta ao sol</b>: os raios ultravioleta do tipo B (<b>UVB</b>) transformam uma substância da pele, derivada do colesterol, em vitamina D. Um pouco vem de óleo de fígado de peixe, leite e gema de ovo. Ela ajuda a <b>depositar cálcio nos ossos</b>; a falta causa <b>raquitismo</b> nas crianças (crescimento atrasado) e <b>osteomalácia</b> nos adultos (ossos enfraquecidos).",
+   "<b>Vitamina E:</b> é <span class='destaque'>antioxidante</span> — protege as células dos danos causados pelos <b>radicais livres</b>; ajuda o sistema imunológico, a pele, os olhos e os nervos. Está em cereais integrais, folhosos (alface, agrião, espinafre), óleos vegetais, frutos secos (nozes, amendoim, amêndoa, avelã) e gema de ovo. A falta atrapalha os impulsos nervosos e causa fraqueza muscular e degeneração da retina.",
+   "<b>Vitamina K:</b> essencial para a <span class='destaque'>coagulação do sangue</span>: num machucado, células formam uma rede de fibras que segura o sangue dentro dos vasos, e depois vem a cicatrização. Está nos folhosos (espinafre, couve, brócolis). Sem ela, a coagulação pode não funcionar bem."
+  ],
+  perguntas:[
+   {tag:"apl",q:"Na história dos navegantes, que sinais mostravam o escorbuto e o que resolveu o problema? Explique usando a vitamina C.",modelo:"Gengivas sangrando, fraqueza, cansaço e dores nas articulações. A causa era falta de vitamina C, que ajuda a produzir colágeno; quando os marinheiros passaram a comer limões e laranjas, os sintomas diminuíram.",chk:["Citei sinais do escorbuto?","Liguei à falta de vitamina C e às frutas cítricas?"]},
+   {tag:"apl",q:"Uma criança quase não sai de casa e quase nunca toma sol. Qual vitamina pode faltar e que doença essa falta pode causar nela?",modelo:"A vitamina D, porque a maior parte dela é produzida na pele com a luz do sol (raios UVB). Na infância, a falta pode causar raquitismo, que atrasa o crescimento.",chk:["Escolhi a vitamina D e liguei ao sol?","Citei o raquitismo?"]},
+   {tag:"conc",q:"Para que serve a vitamina K e onde encontrá-la?",modelo:"Serve para a coagulação do sangue (fazer o sangramento de um ferimento parar). Está nos vegetais folhosos, como espinafre, couve e brócolis.",chk:["Disse que serve para a coagulação?","Citei pelo menos um folhoso?"]}
+  ]
+ },
+ {
+  porto:"Andar 10 · Micronutrientes", emoji:"🧂", u:"mic",
+  titulo:"Sais minerais",
+  texto:[
+   "Os <span class='destaque'>sais minerais</span> também são micronutrientes. Comer de menos ou de mais pode causar problemas de saúde. Estes são os principais do livro:",
+   "<ul><li><b>Cálcio</b> — deixa ossos e dentes resistentes e participa da contração dos músculos e da coagulação. Fontes: folhosos verde-escuros (couve, brócolis, espinafre), leite e derivados. Falta: câibras e problemas em ossos e dentes.</li><li><b>Ferro</b> — forma a <b>hemoglobina</b> e transporta oxigênio no sangue. Fontes: folhosos verde-escuros, feijão, carnes e fígado. Falta: <b>anemia</b>, fraqueza e palidez.</li><li><b>Flúor</b> — mantém o esmalte dos dentes, prevenindo cáries. Fontes: água fluoretada, peixes, frutos do mar, feijão, alho, cebola, alguns chás. Falta: <b>cáries</b>.</li><li><b>Fósforo</b> — forma ossos e dentes. Fontes: leite e derivados, cereais, legumes, carnes. Falta: fraqueza muscular e má calcificação de ossos e dentes.</li><li><b>Iodo</b> — ajuda a regular reações (como a respiração celular) e previne o <b>bócio carencial</b>. Fontes: frutos do mar e o iodo adicionado ao sal de cozinha. Falta: atraso no crescimento e no desenvolvimento das crianças e baixo funcionamento da <b>tireoide</b>.</li><li><b>Potássio</b> — conduz os impulsos nervosos nos neurônios e favorece a contração muscular. Fontes: banana, laranja, couve, brócolis, espinafre. Falta: fraqueza muscular, fadiga e problemas no coração.</li><li><b>Sódio</b> — controla o <b>equilíbrio de água</b> dentro e fora das células e a pressão do sangue. Fonte: sal de cozinha. Falta: desidratação, câibras e espasmos, <b>pressão baixa</b>.</li></ul>",
+   "<div class='olhar'><b>Repare:</b> couve, brócolis e espinafre aparecem várias vezes (cálcio, ferro, potássio — e ainda nas vitaminas E e K). E o sal de cozinha aparece duas vezes: é a fonte do <b>sódio</b> e recebe a adição de <b>iodo</b>.</div>"
+  ],
+  perguntas:[
+   {tag:"apl",q:"Uma pessoa está com anemia, fraqueza e palidez. Qual mineral pode estar faltando? Indique três alimentos que ajudariam.",modelo:"O ferro, que forma a hemoglobina e leva oxigênio pelo sangue. Alimentos: espinafre, couve, brócolis, feijão, carnes ou fígado.",chk:["Escolhi o ferro?","Citei três fontes do texto?"]},
+   {tag:"apl",q:"Explique, usando a tabela, por que é importante que o sal de cozinha receba iodo.",modelo:"Porque o iodo previne o bócio carencial e ajuda a regular reações do corpo; a falta dele causa atraso no crescimento e no desenvolvimento das crianças e baixo funcionamento da tireoide. O sal com iodo é uma das fontes desse mineral.",chk:["Citei a prevenção do bócio (ou a tireoide)?","Citei o atraso no crescimento/desenvolvimento como efeito da falta?"]},
+   {tag:"conc",q:"Cálcio e fósforo têm uma função em comum. Qual é? E o flúor, cuida de quê?",modelo:"Os dois formam ossos e dentes. O flúor ajuda a manter o esmalte dos dentes e previne as cáries.",chk:["Disse que cálcio e fósforo formam ossos e dentes?","Disse que o flúor protege o esmalte/previne cáries?"]}
+  ]
+ },
+ {
+  porto:"Andar 11 · Saúde", emoji:"💛", u:"sau",
+  titulo:"Obesidade, disfunções alimentares e a relação com o corpo",
+  texto:[
+   "A obesidade está ligada a várias doenças. O livro mostra quatro:",
+   "<ul><li><b>Apneia e dispneia</b> — apneia é a parada temporária da respiração durante o sono; dispneia é a sensação de dificuldade para respirar.</li><li><b>Esteatose hepática</b> — acúmulo anormal de gordura no <b>fígado</b>.</li><li><b>Hipertensão arterial</b> — pressão do sangue frequentemente alta, que pode levar a doenças cardiovasculares, <b>AVC</b> e danos nos órgãos.</li><li><b>Diabetes</b> — condição crônica em que o corpo tem dificuldade de controlar o açúcar no sangue, porque o <b>pâncreas</b> produz pouca <b>insulina</b> ou porque as células não conseguem usá-la bem.</li></ul>",
+   "A obesidade tem causas <b>comportamentais</b> (hábitos) e <b>genéticas</b>: duas pessoas com hábitos parecidos podem ganhar peso de jeitos diferentes. Por isso ela é tratada como uma condição <span class='destaque'>multifatorial</span>.",
+   "As <span class='destaque'>disfunções alimentares</span> são comportamentos que nascem de uma <b>preocupação exagerada com a forma do corpo</b> (peso e imagem). Nas redes sociais, os algoritmos mostram corpos fora da realidade e escondem <b>filtros</b> e edições; isso exclui os corpos reais e leva a comparações injustas e a uma imagem ruim de si, principalmente entre jovens.",
+   "<ul><li><b>Anorexia nervosa</b> — causada por uma <b>autoimagem distorcida</b> e pelo medo exagerado de ganhar peso; a pessoa restringe ao máximo a comida, perde muita massa corporal e não percebe as mudanças no próprio corpo. Atinge homens e mulheres (é mais comum no público feminino). O tratamento usa medicamentos e o apoio de psicólogos, psiquiatras, nutricionistas e educadores físicos.</li><li><b>Bulimia nervosa</b> — mais comum entre jovens: episódios de <b>descontrole</b> em que se come muito, seguidos de <b>arrependimento e culpa</b> que levam a comportamentos não saudáveis para tentar perder peso.</li><li><b>Vigorexia</b> — mais comum em homens: a pessoa se vê fraca ou magra e quer ganhar músculos de forma exagerada, mesmo já sendo forte; faz dietas pouco saudáveis e exercício em excesso.</li></ul>",
+   "Em todos os casos há uma percepção distorcida do corpo e uma tentativa exagerada de controlar o peso; por isso o acompanhamento com profissionais de <b>saúde mental</b> é muito recomendado. Exercício regular e alimentação variada fazem muito bem — <b>desde que do jeito adequado</b>.",
+   "<div class='olhar'><b>Cuidado com você:</b> se algo deste andar parecer com o que você sente ou vê em alguém próximo, converse com um adulto de confiança. Pedir ajuda é o primeiro passo.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Por que a obesidade é chamada de condição multifatorial?",modelo:"Porque ela depende de vários fatores ao mesmo tempo, comportamentais (hábitos) e genéticos; por isso pessoas com hábitos parecidos podem ganhar peso de formas diferentes.",chk:["Citei fatores comportamentais e genéticos?","Expliquei que hábitos parecidos podem dar resultados diferentes?"]},
+   {tag:"apl",q:"Cite duas medidas que o governo do Brasil poderia adotar para PREVENIR a obesidade e duas para COMBATÊ-LA, usando ideias do capítulo.",modelo:"Prevenir: manter e divulgar a rotulagem com a lupa 'ALTO EM'; incentivar o consumo de alimentos in natura e diminuir o de ultraprocessados. Combater: oferecer acompanhamento com nutricionistas e médicos; incentivar a prática regular e adequada de exercícios físicos com alimentação variada.",chk:["Dei duas medidas de prevenção?","Dei duas medidas de combate?"]},
+   {tag:"apl",q:"Um amigo vive comparando o próprio corpo com fotos de redes sociais e acha que precisa mudar. Usando o texto, explique por que essa comparação é injusta.",modelo:"Porque os algoritmos mostram corpos fora do comum, que a mídia supervaloriza, e muitas fotos têm filtros e edições escondidas que distorcem a aparência. Assim, os corpos reais ficam de fora e a comparação faz a pessoa ter uma imagem ruim de si.",chk:["Citei os filtros/edições?","Disse que os padrões das redes são irreais (corpos reais ficam de fora)?"]}
+  ]
+ }
+];
+
+/* ====== ESTADO E PERSISTÊNCIA ====== */
+var CHAVE=KIT+'_leitura_v1';
+var mem={};
+var estado=carregar();
+
+function carregar(){
+  try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s); }catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); }
+  return {blocos:{}};
+}
+function calcProgresso(){
+  var conf=0, chkPend=0;
+  BLOCOS.forEach(function(bloco,i){
+    var b=estado.blocos[i]; if(!b||!b.conferido) return; conf++;
+    bloco.perguntas.forEach(function(p,j){ var ep=(b.perguntas&&b.perguntas[j])||{chk:{}}; p.chk.forEach(function(pt,k){ if(!ep.chk||!ep.chk[k]) chkPend++; }); });
+  });
+  estado.progresso={conferidos:conf,total:BLOCOS.length,chkPendentes:chkPend};
+  if(conf===BLOCOS.length && chkPend===0){ if(!estado.concluido){ estado.concluido=true; estado.concluidoEm=new Date().toISOString(); } }
+  return estado.progresso;
+}
+function salvar(){
+  calcProgresso();
+  var s=JSON.stringify(estado);
+  try{ localStorage.setItem(CHAVE,s); }catch(e){ mem[CHAVE]=s; }
+  var d=new Date();
+  document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR');
+  atualizarTrilhaFim();
+}
+function atualizarTrilhaFim(){
+  var p=estado.progresso||calcProgresso();
+  var box=document.getElementById('trilha-fim'), txt=document.getElementById('trilha-fim-txt'), btn=document.getElementById('btn-prox');
+  var h3=box.querySelector('h3');
+  if(estado.concluido||trilhaLiberada()){
+    h3.textContent='✅ Leitura concluída — Quiz destravado!';
+    txt.textContent=estado.concluido?'Você conferiu os 11 andares e respondeu a autoavaliação. Agora teste o que aprendeu.':'Trilha liberada pelos pais.';
+    btn.classList.remove('off');
+  } else {
+    h3.textContent='🔒 Próxima etapa: Quiz';
+    var faltam=p.total-p.conferidos;
+    txt.textContent=faltam>0 ? 'Destrava quando você conferir os '+p.total+' andares (faltam '+faltam+').' : 'Falta responder a autoavaliação Sim/Não de '+p.chkPendentes+' ponto(s) para destravar.';
+    btn.classList.add('off');
+  }
+  marcarNav();
+  desenharTorre();
+}
+function desenharTorre(){
+  var t=document.getElementById('torre'); if(!t) return; var h='';
+  var atualMarcado=false;
+  BLOCOS.forEach(function(b,i){ var e=estado.blocos[i]; var cls=''; var ic='🔒';
+    if(e&&e.conferido){ cls='ok'; ic='✅'; } else if(!atualMarcado && (i===0 || (estado.blocos[i-1]&&estado.blocos[i-1].conferido))){ cls='atual'; ic='🌱'; atualMarcado=true; }
+    h+='<div class="'+cls+'">'+ic+' Andar '+(i+1)+'</div>'; });
+  t.innerHTML=h;
+}
+function estBloco(i){ if(!estado.blocos[i]) estado.blocos[i]={aberto:i===0,conferido:false,perguntas:{}}; return estado.blocos[i]; }
+function estPerg(i,j){ var b=estBloco(i); if(!b.perguntas[j]) b.perguntas[j]={resp:'',warned:false,red:false,tentou:'',chk:{}}; return b.perguntas[j]; }
+
+/* ====== ANTICÓPIA (motor validado — Português 7º, 08/10/2026; reaproveitado sem mudança) ====== */
+function normPal(s){
+  return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/<[^>]*>/g,' ').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(Boolean);
+}
+function maiorRun(aw,bw){
+  var bStr=' '+bw.join(' ')+' ', best=0;
+  for(var i=0;i<aw.length;i++){
+    for(var len=aw.length-i; len>0; len--){
+      var sub=aw.slice(i,i+len).join(' ');
+      if(bStr.indexOf(' '+sub+' ')>=0){ if(len>best)best=len; break; }
+    }
+  }
+  return best;
+}
+function cobertoPorRuns(aw,bw,minRun){
+  var bStr=' '+bw.join(' ')+' ', cov=new Array(aw.length).fill(false);
+  for(var i=0;i<aw.length;i++){
+    for(var len=aw.length-i; len>=minRun; len--){
+      var sub=aw.slice(i,i+len).join(' ');
+      if(bStr.indexOf(' '+sub+' ')>=0){ for(var k=i;k<i+len;k++)cov[k]=true; break; }
+    }
+  }
+  return cov.filter(Boolean).length;
+}
+function ehCopia(resp, textoBloco, pergunta){
+  var a=normPal(resp), src=normPal(textoBloco), q=normPal(pergunta);
+  if(a.length<5) return false;
+  var qStr=' '+q.join(' ')+' ', keep=new Array(a.length).fill(true);
+  for(var i=0;i<a.length;i++){
+    for(var len=a.length-i; len>=4; len--){
+      var sub=a.slice(i,i+len).join(' ');
+      if(qStr.indexOf(' '+sub+' ')>=0){ for(var k=i;k<i+len;k++)keep[k]=false; break; }
+    }
+  }
+  var af=a.filter(function(w,idx){return keep[idx];});
+  if(af.length<5) return false;
+  var run=maiorRun(af,src);
+  var cov=cobertoPorRuns(af,src,5);
+  var ratio=cov/af.length;
+  return run>=8 || ratio>0.6;
+}
+
+/* ====== RENDER ====== */
+function textoPlano(bloco){ return bloco.texto.join(' '); }
+function irBloco(i){ var el=document.getElementById('bloco'+i); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+
+function render(){
+  var cont=document.getElementById('blocos'); cont.innerHTML='';
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i);
+    var div=document.createElement('div'); div.className='bloco '+bloco.u+(b.aberto?'':' travado'); div.id='bloco'+i;
+    var html='<div class="bloco-cab"><div class="num">'+(i+1)+'</div><div><div class="porto">'+bloco.porto+'</div><h3>'+bloco.emoji+' '+bloco.titulo+'</h3></div></div>';
+    if(!b.aberto){
+      html+='<div class="cadeado">🔒 O elevador só chega a este andar quando você conferir o andar anterior.</div>';
+      div.innerHTML=html; cont.appendChild(div); return;
+    }
+    html+='<div class="bloco-corpo"><div class="texto">';
+    bloco.texto.forEach(function(p){ html+= (p.indexOf('<div')===0 || p.indexOf('<ul')===0 ? p : '<p>'+p+'</p>'); });
+    html+='</div>';
+    bloco.perguntas.forEach(function(p,j){
+      var ep=estPerg(i,j);
+      var tagTxt=p.tag==='conc'?'Conceito':'Aplicação';
+      html+='<div class="perg'+(ep.red?' red':'')+'" id="perg'+i+'_'+j+'">';
+      html+='<span class="tag '+p.tag+'">'+tagTxt+'</span>';
+      html+='<label>'+(j+1)+'. '+p.q+'</label>';
+      html+='<textarea id="ta'+i+'_'+j+'" oninput="digitou('+i+','+j+')">'+(ep.resp||'').replace(/</g,'&lt;')+'</textarea>';
+      html+='<div class="aviso" id="av'+i+'_'+j+'"></div>';
+      html+='<div class="modelo" id="mod'+i+'_'+j+'"><span class="lab">Resposta-modelo</span><p>'+p.modelo+'</p>';
+      html+='<div class="chk" id="chk'+i+'_'+j+'"></div></div>';
+      html+='</div>';
+    });
+    html+='<button class="conferir" id="conf'+i+'" onclick="conferir('+i+')">✔️ Conferir este andar</button>';
+    html+='<div class="status-bloco" id="st'+i+'"></div>';
+    if(i<BLOCOS.length-1){ html+='<div class="prox" id="px'+i+'"></div>'; }
+    html+='</div>';
+    div.innerHTML=html;
+    cont.appendChild(div);
+  });
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i);
+    if(b.aberto && b.conferido){ mostrarConferido(i); }
+    atualizarBotao(i);
+  });
+  atualizarRelatorio();
+  atualizarTrilhaFim();
+}
+
+function digitou(i,j){
+  var ep=estPerg(i,j);
+  ep.resp=document.getElementById('ta'+i+'_'+j).value;
+  if(ep.red){
+    var bloco=BLOCOS[i];
+    if(!ehCopia(ep.resp, textoPlano(bloco), bloco.perguntas[j].q)){
+      ep.red=false;
+      var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.remove('red');
+      var av=document.getElementById('av'+i+'_'+j); if(av){av.className='aviso'; av.textContent='';}
+    }
+  }
+  atualizarBotao(i);
+  salvar();
+  atualizarRelatorio();
+}
+
+function atualizarBotao(i){
+  var b=estBloco(i); if(!b.aberto) return;
+  var btn=document.getElementById('conf'+i); if(!btn) return;
+  if(b.conferido){ btn.textContent='✔️ Andar conferido'; btn.disabled=true; return; }
+  var todas=true;
+  BLOCOS[i].perguntas.forEach(function(p,j){
+    var v=(document.getElementById('ta'+i+'_'+j)||{}).value||estPerg(i,j).resp||'';
+    if(v.trim().length<3) todas=false;
+  });
+  btn.disabled=!todas;
+}
+
+function conferir(i){
+  var bloco=BLOCOS[i], b=estBloco(i);
+  var algumBloqueado=false;
+  bloco.perguntas.forEach(function(p,j){
+    var ep=estPerg(i,j);
+    ep.resp=document.getElementById('ta'+i+'_'+j).value;
+    var av=document.getElementById('av'+i+'_'+j);
+    var copia=ehCopia(ep.resp, textoPlano(bloco), p.q);
+    if(copia){
+      if(!ep.warned || ep.resp===ep.tentou){
+        if(!ep.warned){ ep.warned=true; ep.tentou=ep.resp; }
+        av.className='aviso amarelo';
+        av.innerHTML='✋ Boa parte da sua resposta está igual ao texto. Tente <b>reescrever com as suas palavras</b> — explique como se fosse para um amigo, sem olhar o texto. Pode ficar mais curto e simples: o que vale é ser <b>SEU</b>.';
+        algumBloqueado=true;
+      } else {
+        ep.red=true;
+        av.className='aviso vermelho';
+        av.innerHTML='🔴 Esta resposta continua muito parecida com o texto. Ela foi aceita, mas ficou marcada para revisar. Se reescrever com as suas palavras, a marca some.';
+        document.getElementById('perg'+i+'_'+j).classList.add('red');
+      }
+    } else {
+      ep.red=false;
+      if(av){ av.className='aviso'; av.textContent=''; }
+      var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.remove('red');
+    }
+  });
+  salvar();
+  if(algumBloqueado){
+    document.getElementById('st'+i).innerHTML='<span style="color:var(--limao)">✍️ Reescreva as respostas marcadas em amarelo (mude o que escreveu) e clique em Conferir de novo.</span>';
+    return;
+  }
+  b.conferido=true;
+  if(i<BLOCOS.length-1){ estBloco(i+1).aberto=true; }
+  salvar();
+  render();
+  var alvo=document.getElementById('bloco'+i);
+  if(alvo) alvo.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function mostrarConferido(i){
+  var bloco=BLOCOS[i];
+  bloco.perguntas.forEach(function(p,j){
+    var ep=estPerg(i,j);
+    var mod=document.getElementById('mod'+i+'_'+j); if(mod) mod.classList.add('show');
+    if(ep.red){ var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.add('red');
+      var av=document.getElementById('av'+i+'_'+j); if(av){av.className='aviso vermelho'; av.innerHTML='🔴 Resposta marcada para revisar (muito parecida com o texto). Reescreva com as suas palavras para tirar a marca.';}
+    }
+    var chk=document.getElementById('chk'+i+'_'+j); if(chk){
+      var h='<b style="font-size:.8rem;color:#b6f0aa">Confira você: a sua resposta…</b>';
+      p.chk.forEach(function(pt,k){
+        var val=ep.chk[k]||'';
+        h+='<div class="item"><span>'+pt+'</span><span class="simnao">'
+         +'<button class="sim'+(val==='sim'?' ativo':'')+'" onclick="marcarChk('+i+','+j+','+k+',\'sim\')">Sim</button>'
+         +'<button class="nao'+(val==='nao'?' ativo':'')+'" onclick="marcarChk('+i+','+j+','+k+',\'nao\')">Não</button>'
+         +'</span></div>';
+      });
+      chk.innerHTML=h;
+    }
+  });
+  atualizarStatusBloco(i);
+  var btn=document.getElementById('conf'+i); if(btn){ btn.textContent='✔️ Andar conferido'; btn.disabled=true; }
+  if(i<BLOCOS.length-1){
+    var px=document.getElementById('px'+i);
+    if(px) px.innerHTML='<a href="#bloco'+(i+1)+'" onclick="irBloco('+(i+1)+');return false;">⬆️ Subir para o próximo andar</a>';
+  }
+}
+
+function marcarChk(i,j,k,val){
+  var ep=estPerg(i,j); ep.chk[k]=val;
+  salvar(); mostrarConferido(i); atualizarStatusBloco(i); atualizarRelatorio();
+}
+
+function statusPergunta(i,j){
+  var ep=estPerg(i,j), p=BLOCOS[i].perguntas[j];
+  if(ep.red) return 'revisar';
+  var temNao=false, todasResp=true;
+  p.chk.forEach(function(pt,k){ if(ep.chk[k]==='nao') temNao=true; if(!ep.chk[k]) todasResp=false; });
+  if(temNao) return 'revisar';
+  if(!todasResp) return 'pendente';
+  return 'ok';
+}
+function atualizarStatusBloco(i){
+  var st=document.getElementById('st'+i); if(!st) return;
+  var revisar=false, pendente=false;
+  BLOCOS[i].perguntas.forEach(function(p,j){ var s=statusPergunta(i,j); if(s==='revisar')revisar=true; if(s==='pendente')pendente=true; });
+  if(revisar) st.innerHTML='<span style="color:#ffb3bb">🔁 Este andar tem pontos para revisar.</span>';
+  else if(pendente) st.innerHTML='<span style="color:var(--limao)">📝 Responda a autoavaliação (Sim/Não) de cada pergunta.</span>';
+  else st.innerHTML='<span style="color:#b6f0aa">✅ Andar concluído com sucesso!</span>';
+  atualizarRelatorio();
+}
+
+function atualizarRelatorio(){
+  var lista=[], totalConf=0, totalRed=0, totalNao=0;
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i); if(!b.conferido) return; totalConf++;
+    bloco.perguntas.forEach(function(p,j){
+      var ep=estPerg(i,j);
+      if(ep.red){ totalRed++; lista.push('Andar '+(i+1)+' ('+bloco.titulo+'): pergunta '+(j+1)+' — resposta muito parecida com o texto.'); }
+      p.chk.forEach(function(pt,k){ if(ep.chk[k]==='nao'){ totalNao++; lista.push('Andar '+(i+1)+' ('+bloco.titulo+'): revisar — "'+pt+'"'); } });
+    });
+  });
+  var rev=document.getElementById('revisar'), rl=document.getElementById('revisar-lista');
+  if(lista.length){ rev.style.display='block'; rl.innerHTML=lista.map(function(x){return '<li>'+x+'</li>';}).join(''); }
+  else { rev.style.display='none'; rl.innerHTML=''; }
+  var rc=document.getElementById('rel-conteudo');
+  rc.innerHTML='<b>Andares conferidos:</b> '+totalConf+' de '+BLOCOS.length+'.<br>'
+    +'<b>Respostas marcadas (muito parecidas com o texto):</b> '+totalRed+'.<br>'
+    +'<b>Pontos marcados como "Não" na autoavaliação:</b> '+totalNao+'.<br>'
+    +(lista.length? '<span style="color:#ffb3bb">Há '+lista.length+' ponto(s) para revisar (lista acima).</span>' : '<span style="color:#b6f0aa">Sem pontos pendentes para revisar. 👏</span>');
+}
+
+/* ====== EXPORTAR / IMPORTAR / ZERAR ====== */
+function exportar(){
+  var dados=JSON.stringify(estado,null,2);
+  var blob=new Blob([dados],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='leitura-guiada_horta-vertical.json'; a.click();
+}
+function importar(ev){
+  var f=ev.target.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false); }catch(e){ mostrarModal('❌ Arquivo inválido.',false); } };
+  r.readAsText(f);
+}
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Tem certeza que quer apagar TODO o progresso desta leitura? (O Quiz continua destravado se já tiver sido destravado.)',true); }
+function mostrarModal(txt,confirmar){
+  document.getElementById('modal-txt').innerHTML=txt;
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none';
+  document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar && acaoZerar){ var c=estado.concluido, ce=estado.concluidoEm; estado={blocos:{}}; if(c){estado.concluido=true; estado.concluidoEm=ce;} salvar(); render(); } acaoZerar=null; fecharModal(); };
+}
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+render();
+</script>
+</body>
+</html>
